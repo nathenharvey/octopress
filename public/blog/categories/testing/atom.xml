@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Nathen Harvey]]></title>
-  <link href="http://www.nathenharvey.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: testing | Nathen Harvey]]></title>
+  <link href="http://www.nathenharvey.com/blog/categories/testing/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
   <updated>2011-12-27T17:50:03-05:00</updated>
   <id>http://www.nathenharvey.com/</id>

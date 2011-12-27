@@ -7,3 +7,8 @@ categories: test
 ---
 
 this is a first post
+
+```
+
+$ sudo make me a post
+```

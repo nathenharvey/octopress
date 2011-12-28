@@ -1,6 +1,11 @@
 {% if site.github_user %}
 <section>
-  <h1>Github Repos</h1>
+  {% if site.github_repo_count > 0 %}
+    <h1>Github Repos</h1>
+  {% else %}
+    <h1>Github</h1>
+  {% endif %}
+
   <ul id="gh_repos">
     <li class="loading">Status updating...</li>
   </ul>

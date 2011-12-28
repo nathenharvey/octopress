@@ -9,7 +9,7 @@
   <meta name="author" content="Nathen Harvey">
 
   
-  <meta name="description" content="Blog Archives Recent Posts Latest Tweets Status updating&#8230; $.domReady(function(){ getTwitterFeed("nathenharvey", 4, false); }); Follow @ &hellip;">
+  <meta name="description" content="I recently migrated a site from mongrel to passenger. Today I learned that the wordpress site that was served up by the same webserver wasn&#8217;t &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,61 @@
       <div class="blog-index">
   
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/06/11/passenger-and-php/">Passenger and PHP</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-11T17:16:00-04:00" pubdate data-updated="true">Jun 11<span>th</span>, 2010</time>
+        
+         | <a href="/blog/2010/06/11/passenger-and-php/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently migrated a site from mongrel to passenger. Today I learned that the wordpress site that was served up by the same webserver wasn&#8217;t working anymore.</p>
+
+<p>Compared the configurations and everything looked OK, no changes were made as part of the migration. PHP module was being loaded, URL was being properly aliased, etc. Watched my logs and saw that Passenger was attempting to serve up the request which is not what I wanted.</p>
+
+<p>A quick update to my Directory&#8217;s definition and the issue was fixed. I had to explicitly disable Passenger using <code>PassengerEnabled off</code> as seen below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='apache'><span class='line'>  <span class="nb">Alias</span> <span class="sx">/blog</span> <span class="sx">/shared/www/blog</span>
+</span><span class='line'>  <span class="nt">&lt;Directory</span> <span class="s">/shared/www/blog</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nb">DirectoryIndex</span> index.php
+</span><span class='line'>    <span class="nb">PassengerEnabled</span> <span class="k">off</span>
+</span><span class='line'>  <span class="nt">&lt;/Directory&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -90,6 +145,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2010/06/11/passenger-and-php/">Passenger and PHP</a>
+      </li>
     
   </ul>
 </section>
@@ -156,6 +215,19 @@
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'nathenharvey';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

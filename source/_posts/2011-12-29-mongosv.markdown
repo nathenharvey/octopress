@@ -1,0 +1,67 @@
+---
+layout: post
+title: "MongoSV"
+date: 2011-12-29 15:45
+comments: true
+categories: 
+  - 10gen
+  - MongoDC
+  - customink
+  - meetup
+  - mongodb
+  - shutterfly
+---
+I was selected to share some of my experience with MongoDB at MongoSV.
+
+{% blockquote 10gen http://www.10gen.com/events/mongosv-2011 MongoSV 2011 %}
+MongoSV is an annual one-day conference in Silicon Valley dedicated to the open source, non-relational database MongoDB. The comprehensive agenda includes 50+ sessions covering topics for both the novice and experienced user, with presentations from 10gen engineers as well as MongoDB users.
+{% endblockquote %}
+
+## Impressions and Observations
+{% img right http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/mongosv.jpg 400 299 "MongoSV" "MongoSV" %}
+I've been to a few other similar MongoDB events in NYC and DC but this was the largest by far.  There were over 1,000 attendees and 5 tracks plus whiteboard and birds of a feather sessions.
+
+### Schema free != Design free
+As freeing as a document store is, there's still work to be done in designing how you'll store and retrieve your data. It's super-easy to get up and running without giving this much thought but you *will* need to design your documents eventually. There were at least 3 sessions about schema design during MongoSV.
+
+### Aggregation Framework
+The new aggregation framework is great, highly anticipated, and much needed. During the Keynote, [Eliot Horowitz](http://twitter.com/eliothorowitz) demonstrated an application built on MonogDB that used the Twitter API to capture tweets related to the day's events. The demo site ran throughout the day and was used in a contest to see who tweeted the most about the conference and who was mentioned most. The source code for the app was subsequently made available on [github](https://github.com/erh/mongosv-twitter-demo). Check out [Chris Westin](http://twitter.com/cwestin63)'s  presentation on [MongoDB's New Aggregation Framework](http://www.10gen.com/presentations/mongosv-2011/mongodbs-new-aggregation-framework).
+
+<!--more-->
+
+## MongoDB at CustomInk - Adoption, Operations, and Community
+My presentation, "**MongoDB at CustomInk - Adoption, Operations, and Community**", detailed some of the reasons we decided to go with MongoDB, the challenges we faced bringing it into the organization, how we're using it in production today, lessons learned, and some of our future plans. I also covered some of the operational considerations for putting MongoDB into production: how do we deploy, operate, and monitor MongoDB. I also described [CustomInk](http://www.customink.com)'s involvement in the MongoDB community.
+
+You can catch a [video of my presentation on the 10gen site](http://www.10gen.com/presentations/mongosv-2011/mongodb-at-customink-adoption-operations-and-community) or just checkout the slides below.
+
+<script src="http://speakerdeck.com/embed/4ee19eec04357e0050004017.js"></script>
+
+## MongoDB at shutterfly
+It was great to meet [Kenny Gorman](http://twitter.com/kennygorman) from shutterfly and share some of our experiences with MongoDB. [shutterfly](http://www.shutterfly.com/) and [CustomInk](http://www.customink.com) have a lot in common. Of course, both are online retailers but some other things that we share include:
+
+* Products are designed by the customer
+* Products are tangible, manufactured, and shipped to the customer. Capacity planning is about more than just "how many servers do we need?"
+* Both sell a variety of products
+* The companies were both started in 1999
+* Both use MongoDB, Oracle, and MySQL
+* Most or all production servers run in a physical datacenter
+
+Of course, there are plenty of differences, too. shutterfly is publicly traded and larger than CustomInk.
+
+It was interesting to see how shutterfly's approach to adopting MongoDB is very similar to CustomInk's. Both store product data in MongoDB but order data lives in relational databases.
+
+Check out Kenny's [Performance Tuning and Scalability presentation](http://www.10gen.com/presentations/mongosv-2011/performance-tuning-and-scalability).
+
+## AWS and MongoDB
+Using MongoDB on Amazon's AWS was, not surprisingly, another hot topic. I think that if either shutterfly or CustomInk were to launch their business today, they'd likely look to AWS, or something similar, to house their infrastructure. The truth of the matter is that in 1999 that simply wasn't an option so neither company stared there. At CustomInk, we have started moving some of our production services out of the data center and into alternate hosting environments (managed hosting or "the cloud"). However, the real sweet spot for us with AWS, at the moment, is staging and test servers. With AWS, we have the ability to quickly, easily, and inexpensively spin up a separate environment for each development branch.
+
+The "developer happiness" that MongoDB affords does not make it immune to the "operational considerations" that every platform must take into account. These considerations vary from one environment to the next (bare metal, vm in a data center, managed hosting, "the cloud", etc.)  Application that are not built to take advantages of the strengths of each environment will eventually suffer the consequences of running there.  Those consequences may include downtime, poor performance, and/or lots of operational complexity.
+
+## Other videos and presentations
+Check-out [all of the presentations from the conference](http://www.10gen.com/presentations#event__mongosv-2011) on the 10gen site.
+
+## Quick thanks
+* Thanks to [10gen](http://10gen.com) for continually providing such great conferences. The single-day, multi-track at a low cost format works very well .
+* Thanks to [Busyconf](http://busyconf.com/) for creating **the best** app for conference schedules and hosting the [MongoSV schedule](http://mongosv2011.busyconf.com/schedule/full).
+* Thanks to Adam, Amelia, Francesca, Meghan, Sam, and everyone else for 10gen for organizing the [MongoDB Masters Summit](http://nathenharvey.com/blog/2011/12/29/mongodb-masters/) and MongoSV.
+* Thanks to everyone who came out to my presentation and to everyone I met at MongoSV

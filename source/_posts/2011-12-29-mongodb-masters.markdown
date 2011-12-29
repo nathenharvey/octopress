@@ -60,7 +60,7 @@ Search is no easy problem to solve and there are projects whose sole focus is on
 I also agree with some of 10gen's concern that search is like a pandora's box. Once released, there will be a flood of feature requests and bug reports for this component which could quickly be distracting for the engineering team.
 
 ### Swag
-It wouldn't be a 10gen event without a little swag, right?! MongoDB Masters were treated to custom coffee mugs and great MongoDB Masters jackets.
+It wouldn't be a 10gen event without a little swag, right?! MongoDB Masters were treated to custom coffee mugs, MongoDB Masters t-shirts, and great MongoDB Masters jackets.
 
 ## Next steps
 The MongoDB Masters program is still pretty new. We're looking for ways to get the most out of the group. Google hangouts and IRC are where we're headed next but who knows where we'll go from there. I'd love to hear any ideas you have for how to make a group like this successful and productive.

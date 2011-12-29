@@ -4,7 +4,7 @@
   <title><![CDATA[Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2011-12-28T22:45:20-05:00</updated>
+  <updated>2011-12-28T22:52:51-05:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -12,6 +12,58 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Vagrant and VBoxManage import]]></title>
+    <link href="http://www.nathenharvey.com/blog/2010/12/27/vagrant-and-vboxmanage-import/"/>
+    <updated>2010-12-27T19:25:00-05:00</updated>
+    <id>http://www.nathenharvey.com/blog/2010/12/27/vagrant-and-vboxmanage-import</id>
+    <content type="html"><![CDATA[<p>I&#8217;ve recently started using <a href="http://vagrantup.com/">Vagrant</a> for building local VMs with VirtualBox. It&#8217;s a great way to test out my <a href="http://www.opscode.com/chef">Chef</a> cookbooks.</p>
+
+<p>I recently ran into an error after a system crash. When I tried to run:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>vagrant up
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>the following error was reported:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>The VM import failed! Try running <span class="sb">`</span>VBoxManage import<span class="sb">`</span> on the box file manually
+</span><span class='line'><span class="k">for </span>more verbose error output.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To successfully run VBoxManage import, you first need to locate the .ovf file used by Vagrant when building your VM. Typically, you&#8217;ll find your box definitions in the <code>~/.vagrant/boxes</code> directory. So, I tried to run the command specified from there:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.vagrant/boxes/base
+</span><span class='line'>
+</span><span class='line'>VBoxManage import box.ovf
+</span><span class='line'>
+</span><span class='line'>ERROR: Cannot register the hard disk
+</span><span class='line'><span class="s1">&#39;~/.vagrant/boxes/base/vagrant-centos64-disk.vmdk&#39;</span> with UUID
+</span><span class='line'><span class="o">{</span>5d2426bf-f04e-40a0-bf36-a27c8d45f920<span class="o">}</span> because a hard disk
+</span><span class='line'><span class="s1">&#39;~/.vagrant/boxes/base/vagrant-centos64-disk.vmdk&#39;</span> with UUID
+</span><span class='line'><span class="o">{</span>5d2426bf-f04e-40a0-bf36-a27c8d45f920<span class="o">}</span> already exists in the media registry
+</span><span class='line'><span class="o">(</span><span class="s1">&#39;~/Library/VirtualBox/VirtualBox.xml&#39;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To get around this, I simply removed <code>~/Library/VirtualBox/VirtualBox.xml</code>. I was then able to vagrant up and continue on with my Chef cookbook.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Citizen Cope Concert]]></title>

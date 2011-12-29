@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Nathen Harvey</title>
+  <title>Testing mod_rewrite and apache redirects - Nathen Harvey</title>
   <meta name="author" content="Nathen Harvey">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.nathenharvey.com">
+  <link rel="canonical" href="http://www.nathenharvey.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -76,15 +76,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/">Testing Mod_rewrite and Apache Redirects</a></h1>
+      <h1 class="entry-title">Testing Mod_rewrite and Apache Redirects</h1>
     
     
       <p class="meta">
@@ -107,7 +104,7 @@
   </header>
 
 
-  <div class="entry-content"><p>At <a href="http://www.customink.com">CustomInk</a>, we recently migrated from mongrel to Passenger for our Ruby on Rails website. This migration included a full rewrite of our apache configuration files.</p>
+<div class="entry-content"><p>At <a href="http://www.customink.com">CustomInk</a>, we recently migrated from mongrel to Passenger for our Ruby on Rails website. This migration included a full rewrite of our apache configuration files.</p>
 
 <p>With over 500 redirect and rewrite rules in place I needed a way to ensure my copy-n-paste skills were up to snuff and that we didn&#8217;t loose any redirects along the way.</p>
 
@@ -124,22 +121,16 @@
 
 <p>What other methods have you used to test your rewrite rules?</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/06/11/passenger-and-php/">Passenger and PHP</a></h1>
-    
-    
-      <p class="meta">
-        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Nathen Harvey</span></span>
+
+      
 
 
 
@@ -151,44 +142,42 @@
   
 
 
-<time datetime="2010-06-11T09:25:00-04:00" pubdate data-updated="true">Jun 11<span>th</span>, 2010</time>
-        
-      </p>
+<time datetime="2010-07-16T09:00:00-04:00" pubdate data-updated="true">Jul 16<span>th</span>, 2010</time>
+      
+
+
+    </p>
     
-  </header>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.nathenharvey.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/" data-via="nathenharvey" data-counturl="http://www.nathenharvey.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/06/11/passenger-and-php/" title="Previous Post: Passenger and PHP">&laquo; Passenger and PHP</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-  <div class="entry-content"><p>I recently migrated a site from mongrel to passenger. Today I learned that the wordpress site that was served up by the same webserver wasn&#8217;t working anymore.</p>
-
-<p>Compared the configurations and everything looked OK, no changes were made as part of the migration. PHP module was being loaded, URL was being properly aliased, etc. Watched my logs and saw that Passenger was attempting to serve up the request which is not what I wanted.</p>
-
-<p>A quick update to my Directory&#8217;s definition and the issue was fixed. I had to explicitly disable Passenger using <code>PassengerEnabled off</code> as seen below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'>  <span class="nb">Alias</span> <span class="sx">/blog</span> <span class="sx">/shared/www/blog</span>
-</span><span class='line'>  <span class="nt">&lt;Directory</span> <span class="s">/shared/www/blog</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nb">DirectoryIndex</span> index.php
-</span><span class='line'>    <span class="nb">PassengerEnabled</span> <span class="k">off</span>
-</span><span class='line'>  <span class="nt">&lt;/Directory&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
-  
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -209,7 +198,7 @@
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -229,7 +218,7 @@
   
 
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/nathenharvey">@nathenharvey</a> on Github
@@ -259,6 +248,7 @@
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -273,7 +263,10 @@
       var disqus_shortname = 'nathenharvey';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.nathenharvey.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/';
+        var disqus_url = 'http://www.nathenharvey.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

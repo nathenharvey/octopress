@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Nathen Harvey</title>
+  <title>Why we chose Chef over Puppet at CustomInk - Nathen Harvey</title>
   <meta name="author" content="Nathen Harvey">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.nathenharvey.com">
+  <link rel="canonical" href="http://www.nathenharvey.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -76,15 +76,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/">Why We Chose Chef Over Puppet at CustomInk</a></h1>
+      <h1 class="entry-title">Why We Chose Chef Over Puppet at CustomInk</h1>
     
     
       <p class="meta">
@@ -107,7 +104,7 @@
   </header>
 
 
-  <div class="entry-content"><p>Not unlike most technology choices, the choice of which configuration management tool to use for managing your infrastructure as code is sure to spark debate among opinionated technologists. There are certainly a number of choices available all of which have their own strengths and weaknesses. There are a number of things to consider as you select a tool.</p>
+<div class="entry-content"><p>Not unlike most technology choices, the choice of which configuration management tool to use for managing your infrastructure as code is sure to spark debate among opinionated technologists. There are certainly a number of choices available all of which have their own strengths and weaknesses. There are a number of things to consider as you select a tool.</p>
 
 <p>Before we get into any of the specifics, I want to make it clear that the &#8220;right&#8221; answer to this question is a simple, but emphatic &#8220;yes!&#8221; Yes, you should be using a tool that allows you to manage your infrastructure as code. That tool should NOT be a server.txt file that you keep on the machine that documents the installation, set-up, and configuration changes you&#8217;ve made. Moving that text to somewhere other than the local server is a step in the right direction but isn&#8217;t really the answer. Moving the server.txt file to your corporate wiki is going to suck just as bad.</p>
 
@@ -170,101 +167,16 @@ If you're new to the idea of "Infrastructure as Code", understand that there's a
 
 <p>This was originally posted on my <a href="http://nathenharvey.blogspot.com/2011/11/why-we-chose-puppet-over-chef-at.html">blogger site</a>.</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/12/27/vagrant-and-vboxmanage-import/">Vagrant and VBoxManage Import</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Nathen Harvey</span></span>
 
-<time datetime="2010-12-27T19:25:00-05:00" pubdate data-updated="true">Dec 27<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve recently started using <a href="http://vagrantup.com/">Vagrant</a> for building local VMs with VirtualBox. It&#8217;s a great way to test out my <a href="http://www.opscode.com/chef">Chef</a> cookbooks.</p>
-
-<p>I recently ran into an error after a system crash. When I tried to run:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>vagrant up
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>the following error was reported:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>The VM import failed! Try running <span class="sb">`</span>VBoxManage import<span class="sb">`</span> on the box file manually
-</span><span class='line'><span class="k">for </span>more verbose error output.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>To successfully run VBoxManage import, you first need to locate the .ovf file used by Vagrant when building your VM. Typically, you&#8217;ll find your box definitions in the <code>~/.vagrant/boxes</code> directory. So, I tried to run the command specified from there:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.vagrant/boxes/base
-</span><span class='line'>
-</span><span class='line'>VBoxManage import box.ovf
-</span><span class='line'>
-</span><span class='line'>ERROR: Cannot register the hard disk
-</span><span class='line'><span class="s1">&#39;~/.vagrant/boxes/base/vagrant-centos64-disk.vmdk&#39;</span> with UUID
-</span><span class='line'><span class="o">{</span>5d2426bf-f04e-40a0-bf36-a27c8d45f920<span class="o">}</span> because a hard disk
-</span><span class='line'><span class="s1">&#39;~/.vagrant/boxes/base/vagrant-centos64-disk.vmdk&#39;</span> with UUID
-</span><span class='line'><span class="o">{</span>5d2426bf-f04e-40a0-bf36-a27c8d45f920<span class="o">}</span> already exists in the media registry
-</span><span class='line'><span class="o">(</span><span class="s1">&#39;~/Library/VirtualBox/VirtualBox.xml&#39;</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>To get around this, I simply removed <code>~/Library/VirtualBox/VirtualBox.xml</code>. I was then able to vagrant up and continue on with my Chef cookbook.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/12/02/citizen-cope-concert/">Citizen Cope Concert</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -276,164 +188,48 @@ If you're new to the idea of "Infrastructure as Code", understand that there's a
   
 
 
-<time datetime="2010-12-02T21:11:00-05:00" pubdate data-updated="true">Dec 2<span>nd</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Citizen Cope came to the Rams Head On Stage in Annapolis for 3 sold out solo shows.  I was at the first one and was able to make some fairly good recordings.</p>
-
-<p>The playlist below includes the entire Cope set.  Have a listen and let me know what you think.</p>
-
-<p>This concert is now also available on <a href="http://www.archive.org/details/CitizenCope-LiveAtRamsHeadOnStage-26Nov2010">Live Music Archive</a>.</p>
-
-<object width="480" height="385"><param name="movie" value="http://www.youtube.com/p/BFA9AD670D22F8CF?hl=en_US&amp;fs=1"><param name="allowFullScreen" value="true"><param name="allowscriptaccess" value="always"><embed src="http://www.youtube.com/p/BFA9AD670D22F8CF?hl=en_US&amp;fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="385"></embed></object>
-
-
-<ol>
-<li><a href="http://www.youtube.com/watch?v=CkCmd9Q8UMg">Every Waking Moment</a></li>
-<li><a href="http://www.youtube.com/watch?v=ka9vdrXATt4">Salvation</a></li>
-<li><a href="http://www.youtube.com/watch?v=-acD44WayGE">More Than It Seems</a></li>
-<li><a href="http://www.youtube.com/watch?v=R2SVcBRIuoo">Bullet And A Target</a></li>
-<li><a href="http://www.youtube.com/watch?v=cMvpUNQ9sHo">Out on the Weekend (Neil Young cover)</a></li>
-<li><a href="http://www.youtube.com/watch?v=JAWyAUbjuGA">Holdin&#8217; On</a></li>
-<li><a href="http://www.youtube.com/watch?v=U-cQNWG6KRY">All Dressed Up</a></li>
-<li><a href="http://www.youtube.com/watch?v=nmHubW0xt3M">Lifeline</a></li>
-<li><a href="http://www.youtube.com/watch?v=MoLXeIvsFag">Healing Hands</a></li>
-<li><a href="http://www.youtube.com/watch?v=bQw97HbKiZA">Keep Askin&#8217;</a></li>
-<li><a href="http://www.youtube.com/watch?v=IdcHdaCnHLg">Pablo Picasso</a></li>
-<li><a href="http://www.youtube.com/watch?v=ASrQHQ367hg">D&#8217;Artagnan&#8217;s Theme</a></li>
-<li><a href="http://www.youtube.com/watch?v=GFaVnSLKGBY">200,000 (in counterfeit 50 dollar bills)</a></li>
-<li><a href="http://www.youtube.com/watch?v=7d2_C-0DVuo">If There&#8217;s Love</a></li>
-<li><a href="http://www.youtube.com/watch?v=_HBFALRUiq8">Comin&#8217; Back</a></li>
-<li><a href="http://www.youtube.com/watch?v=zcC3D7MZOUc">One Lovely Day</a></li>
-<li><a href="http://www.youtube.com/watch?v=CeUeag43IR8">Son&#8217;s Gonna Rise</a></li>
-<li><a href="http://www.youtube.com/watch?v=mWfW0Kgoqmc">Sideways</a></li>
-<li><a href="http://www.youtube.com/watch?v=Y3cqhOqq7hw">Hurricane Waters</a></li>
-<li><a href="http://www.youtube.com/watch?v=xetaamjGX24">Hands of the Saints</a></li>
-<li><a href="http://www.youtube.com/watch?v=RtyNYbuyE_w">My Way Home</a></li>
-<li><a href="http://www.youtube.com/watch?v=5_8GmyA4V6U">Left For Dead</a></li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2011-11-21T03:29:00-05:00" pubdate data-updated="true">Nov 21<span>st</span>, 2011</time>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/">Testing Mod_rewrite and Apache Redirects</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/customink/'>customink</a>, <a class='category' href='/blog/categories/devops/'>devops</a>, <a class='category' href='/blog/categories/opschef/'>opschef</a>, <a class='category' href='/blog/categories/sysadmin/'>sysadmin</a>
+  
+</span>
 
 
-<time datetime="2010-07-16T09:00:00-04:00" pubdate data-updated="true">Jul 16<span>th</span>, 2010</time>
-        
-      </p>
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>At <a href="http://www.customink.com">CustomInk</a>, we recently migrated from mongrel to Passenger for our Ruby on Rails website. This migration included a full rewrite of our apache configuration files.</p>
-
-<p>With over 500 redirect and rewrite rules in place I needed a way to ensure my copy-n-paste skills were up to snuff and that we didn&#8217;t loose any redirects along the way.</p>
-
-<p>In my search for help, I found a <a href="http://www.viget.com/extend/test-drive-mod-rewrite-rules-with-testunit/">blog post by Patrick Reagan from Viget labs</a> that described a method for writing tests that will verify all the rewrite rules and redirects. Patrick&#8217;s ideas were packaged up into a gem and available on <a href="http://github.com/eightbitraptor/http_redirect_test">github</a>.</p>
-
-<p>I can now write up tests like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">should_redirect</span> <span class="s2">&quot;/cink/ideas/ideas.jsp&quot;</span><span class="p">,</span> <span class="ss">:to</span> <span class="o">=&gt;</span> <span class="s2">&quot;/inspiration/&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So now I can to some TDC (test-driven configuration) whenever I get a request for a new redirect.</p>
-
-<p>What other methods have you used to test your rewrite rules?</p>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.nathenharvey.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/" data-via="nathenharvey" data-counturl="http://www.nathenharvey.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
 </div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
+    
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/06/11/passenger-and-php/">Passenger and PHP</a></h1>
-    
-    
-      <p class="meta">
-        
+        <a class="basic-alignment left" href="/blog/2010/12/27/vagrant-and-vboxmanage-import/" title="Previous Post: Vagrant and VBoxManage import">&laquo; Vagrant and VBoxManage import</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-11T09:25:00-04:00" pubdate data-updated="true">Jun 11<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I recently migrated a site from mongrel to passenger. Today I learned that the wordpress site that was served up by the same webserver wasn&#8217;t working anymore.</p>
-
-<p>Compared the configurations and everything looked OK, no changes were made as part of the migration. PHP module was being loaded, URL was being properly aliased, etc. Watched my logs and saw that Passenger was attempting to serve up the request which is not what I wanted.</p>
-
-<p>A quick update to my Directory&#8217;s definition and the issue was fixed. I had to explicitly disable Passenger using <code>PassengerEnabled off</code> as seen below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'>  <span class="nb">Alias</span> <span class="sx">/blog</span> <span class="sx">/shared/www/blog</span>
-</span><span class='line'>  <span class="nt">&lt;Directory</span> <span class="s">/shared/www/blog</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nb">DirectoryIndex</span> index.php
-</span><span class='line'>    <span class="nb">PassengerEnabled</span> <span class="k">off</span>
-</span><span class='line'>  <span class="nt">&lt;/Directory&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
-  
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -466,7 +262,7 @@ If you're new to the idea of "Infrastructure as Code", understand that there's a
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -486,7 +282,7 @@ If you're new to the idea of "Infrastructure as Code", understand that there's a
   
 
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/nathenharvey">@nathenharvey</a> on Github
@@ -516,6 +312,7 @@ If you're new to the idea of "Infrastructure as Code", understand that there's a
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -530,7 +327,10 @@ If you're new to the idea of "Infrastructure as Code", understand that there's a
       var disqus_shortname = 'nathenharvey';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.nathenharvey.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/';
+        var disqus_url = 'http://www.nathenharvey.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

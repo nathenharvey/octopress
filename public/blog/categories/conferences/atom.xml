@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: conferences | Nathen Harvey]]></title>
+  <link href="http://www.nathenharvey.com/blog/categories/conferences/atom.xml" rel="self"/>
+  <link href="http://www.nathenharvey.com/"/>
+  <updated>2011-12-29T09:58:53-05:00</updated>
+  <id>http://www.nathenharvey.com/</id>
+  <author>
+    <name><![CDATA[Nathen Harvey]]></name>
+    <email><![CDATA[nathen@nathenharvey.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[I'm Speaking at MongoSV]]></title>
+    <link href="http://www.nathenharvey.com/blog/2011/11/21/im-speaking-at-mongosv/"/>
+    <updated>2011-11-21T03:57:00-05:00</updated>
+    <id>http://www.nathenharvey.com/blog/2011/11/21/im-speaking-at-mongosv</id>
+    <content type="html"><![CDATA[<p><img class="right" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/MongoSV_badge.png" width="320" height="156" title="MongoSV" alt="MongoSV"></p>
+
+<p><a href="http://www.10gen.com/events/mongosv-2011">MongoSV</a> is an annual one-day conference in Silicon Valley dedicated to the open source, non-relational database MongoDB. The comprehensive agenda includes 50+ sessions covering topics for both the novice and experienced user, with presentations from 10gen engineers as well as MongoDB users.</p>
+
+<p>I'm one of the MongoDB users who will be speaking at the conference. The title of my talk is "<strong>MongoDB at CustomInk - Adoption, Operations, and Community</strong>"</p>
+
+<p>In this talk I'll detail some of the reasons we decided to go with MongoDB, the challenges we faced bringing it into the organization, how we're using it in production today, lessons learned, and some of our future plans. The talk will also describe some of the operational considerations for putting MongoDB into production: how do we deploy, operate, and monitor MongoDB. During this talk I'll also describe <a href="http://www.customink.com">CustomInk</a>'s involvement in the MongoDB community.</p>
+
+<p>Since January, CustomInk has been hosting the <a href="http://www.meetup.com/Washington-DC-MongoDB-Users-Group">Washington DC MongoDB Users Group</a>. I'll share some of my experience with, tips for, and lessons learned growing a monthly user group.</p>
+
+<p>The talk will be a refreshed and expanded version of the presentation I gave at <a href="http://www.10gen.com/events/mongodc-2011">MongoDC</a> back in June. You can find <a href="http://speakerrate.com/events/985-mongodc">slides and reviews from MongoDC on SpeakerRate</a>.</p>
+
+<p><a href="http://www.10gen.com/">10gen</a> does a great job with these conferences. They're always packed full of great information and you'll get to meets lots of people from the community. MongoSV is the largest of these one-day conferences that 10gen organizes. This year, the conference also includes the <a href="https://docs.google.com/spreadsheet/viewform?formkey=dGNvYzNpY3BTMHFrZWRVLVpuTktoSmc6MQ">MongoDB Community Awards</a> where you can nominate someone in three different categories:</p>
+
+<ul>
+<li>Innovative Application</li>
+<li>Community Champion</li>
+<li>Contributor</li>
+</ul>
+
+
+<p>If you're in Santa Clara on December 9th, or need a reason to be, be sure to stop by MongoSV. I have a discount code I can share with you to lower the cost of admission significantly, just let me know if you're interested.</p>
+]]></content>
+  </entry>
+  
+</feed>

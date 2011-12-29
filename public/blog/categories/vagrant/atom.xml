@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: vagrant | Nathen Harvey]]></title>
+  <link href="http://www.nathenharvey.com/blog/categories/vagrant/atom.xml" rel="self"/>
+  <link href="http://www.nathenharvey.com/"/>
+  <updated>2011-12-29T09:58:53-05:00</updated>
+  <id>http://www.nathenharvey.com/</id>
+  <author>
+    <name><![CDATA[Nathen Harvey]]></name>
+    <email><![CDATA[nathen@nathenharvey.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Vagrant and VBoxManage import]]></title>
+    <link href="http://www.nathenharvey.com/blog/2010/12/27/vagrant-and-vboxmanage-import/"/>
+    <updated>2010-12-27T19:25:00-05:00</updated>
+    <id>http://www.nathenharvey.com/blog/2010/12/27/vagrant-and-vboxmanage-import</id>
+    <content type="html"><![CDATA[<p>I've recently started using <a href="http://vagrantup.com/">Vagrant</a> for building local VMs with VirtualBox. It's a great way to test out my <a href="http://www.opscode.com/chef">Chef</a> cookbooks.</p>
+
+<p>I recently ran into an error after a system crash. When I tried to run:</p>
+
+<p><code>bash
+vagrant up
+</code></p>
+
+<p>the following error was reported:</p>
+
+<p><code>bash
+The VM import failed! Try running `VBoxManage import` on the box file manually
+for more verbose error output.
+</code></p>
+
+<p>To successfully run VBoxManage import, you first need to locate the .ovf file used by Vagrant when building your VM. Typically, you'll find your box definitions in the <code>~/.vagrant/boxes</code> directory. So, I tried to run the command specified from there:</p>
+
+<p>``` bash
+cd ~/.vagrant/boxes/base</p>
+
+<p>VBoxManage import box.ovf</p>
+
+<p>ERROR: Cannot register the hard disk
+'~/.vagrant/boxes/base/vagrant-centos64-disk.vmdk' with UUID
+{5d2426bf-f04e-40a0-bf36-a27c8d45f920} because a hard disk
+'~/.vagrant/boxes/base/vagrant-centos64-disk.vmdk' with UUID
+{5d2426bf-f04e-40a0-bf36-a27c8d45f920} already exists in the media registry
+('~/Library/VirtualBox/VirtualBox.xml')
+```</p>
+
+<p>To get around this, I simply removed <code>~/Library/VirtualBox/VirtualBox.xml</code>. I was then able to vagrant up and continue on with my Chef cookbook.</p>
+]]></content>
+  </entry>
+  
+</feed>

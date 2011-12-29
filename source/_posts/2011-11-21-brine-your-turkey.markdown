@@ -3,7 +3,9 @@ layout: post
 title: "Brine your turkey!"
 date: 2011-11-21 04:48
 comments: true
-categories: [cooking, turkey]
+categories: 
+  - cooking
+  - turkey
 ---
 It's Thanksgiving week. That means it's time to start prepping your turkey.
 

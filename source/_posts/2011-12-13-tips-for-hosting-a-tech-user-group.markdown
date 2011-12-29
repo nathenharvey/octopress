@@ -3,7 +3,16 @@ layout: post
 title: "Tips for Hosting a Tech User Group"
 date: 2011-12-13 19:24
 comments: true
-categories: [10gen, DevOps DC, MongoDC, meetup, customink, devops, mongodb, user groups, meetup]
+categories:
+  - 10gen
+  - DevOps DC
+  - MongoDC
+  - customink
+  - devops
+  - meetup
+  - mongodb
+  - user groups
+  - web opearations
 ---
 In January of 2011, I started hosting a [monthly MongoDB meetup](http://www.meetup.com/Washington-DC-MongoDB-Users-Group/). My employer, [CustomInk](http://www.customink.com/), was looking for ways to become better known in the local DC technology market. We were also just getting started with our initial production deployment of MonogoDB. Having engineers from the area come to our office, get to know CustomInk, and share their experiences with using MongoDB was a great opportunity!
 

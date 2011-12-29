@@ -3,7 +3,16 @@ layout: post
 title: "Agenda Tips for a Tech User Group"
 date: 2011-12-13 19:53
 comments: true
-categories: [10gen, DevOps DC, MongoDC, meetup, customink, devops, mongodb, user groups, meetup]
+categories:
+  - 10gen
+  - DevOps DC
+  - MongoDC
+  - customink
+  - devops
+  - meetup
+  - mongodb
+  - user groups
+  - web operations
 ---
 In my [previous post](http://nathenharvey.com/blog/2011/12/13/tips-for-hosting-a-tech-user-group/), I gave some [ideas about how to run a successful user group meeting](http://nathenharvey.com/blog/2011/12/13/tips-for-hosting-a-tech-user-group/). In this post, I'll focus on the actual meeting format we typically use for our [Washington DC MongoDB Users Group](http://www.meetup.com/Washington-DC-MongoDB-Users-Group/). You may find that this format works well for any technical user group.
 

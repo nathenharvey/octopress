@@ -3,7 +3,10 @@ layout: post
 title: "Citizen Cope Concert"
 date: 2010-12-02 21:11
 comments: true
-categories: [music, rams head, citizen cope]
+categories:
+  - citizen cope
+  - music
+  - rams head
 ---
 Citizen Cope came to the Rams Head On Stage in Annapolis for 3 sold out solo shows.  I was at the first one and was able to make some fairly good recordings.
 

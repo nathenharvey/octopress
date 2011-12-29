@@ -3,7 +3,13 @@ layout: post
 title: "I'm Speaking at MongoSV"
 date: 2011-11-21 03:57
 comments: true
-categories: [mongodb, 10gen, conferences, user groups, MongoDC, customink]
+categories:
+  - 10gen
+  - MongoDC
+  - conferences
+  - customink
+  - mongodb
+  - user groups
 ---
 {% img right http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/MongoSV_badge.png 320 156 "MongoSV" "MongoSV" %}
 

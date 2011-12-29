@@ -3,7 +3,12 @@ layout: post
 title: "Passenger and PHP"
 date: 2010-06-11 09:25
 comments: true
-categories: [customink, apache, passenger, ruby on rails, wordpress]
+categories: 
+  - apache
+  - customink
+  - passenger
+  - ruby on rails
+  - wordpress
 ---
 I recently migrated a site from mongrel to passenger. Today I learned that the wordpress site that was served up by the same webserver wasn't working anymore.  
 

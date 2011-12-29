@@ -3,7 +3,14 @@ layout: post
 title: "Vagrant and VBoxManage import"
 date: 2010-12-27 19:25
 comments: true
-categories: [vagrant, virtualbox, opscode, chef, devops, sysadmin]
+categories:
+  - chef
+  - devops
+  - opscode
+  - sysadmin
+  - vagrant
+  - virtualbox
+  - web operations
 ---
 I've recently started using [Vagrant](http://vagrantup.com/) for building local VMs with VirtualBox. It's a great way to test out my [Chef](http://www.opscode.com/chef) cookbooks.
 

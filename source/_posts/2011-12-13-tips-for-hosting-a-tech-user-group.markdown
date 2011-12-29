@@ -50,4 +50,4 @@ For some more great suggestions, including suggestions on how to get great prese
 
 What suggestions do you have? Please leave a comment or get in touch with me.
 
-In my [next post](http://nathenharvey.blogspot.com/2011/12/agenda-tips-for-tech-user-group.html), I'll provide [some suggestions on the agenda / format for each meeting](http://nathenharvey.blogspot.com/2011/12/agenda-tips-for-tech-user-group.html).
+In my [next post](http://nathenharvey.com/blog/2011/12/13/agenda-tips-for-a-tech-user-group/), I'll provide [some suggestions on the agenda / format for each meeting](http://nathenharvey.com/blog/2011/12/13/agenda-tips-for-a-tech-user-group/).

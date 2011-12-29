@@ -8,7 +8,7 @@ categories:
 In my [previous post](http://nathenharvey.com/blog/2011/12/13/tips-for-hosting-a-tech-user-group/), I gave some [ideas about how to run a successful user group meeting](http://nathenharvey.com/blog/2011/12/13/tips-for-hosting-a-tech-user-group/). In this post, I'll focus on the actual meeting format we typically use for our [Washington DC MongoDB Users Group](http://www.meetup.com/Washington-DC-MongoDB-Users-Group/). You may find that this format works well for any technical user group.
 
 We've experimented with a couple of different formats but I think we've settled into something that generally works for us. Some of these don't work with a meeting that's larger than 20 people; adjust accordingly.
-
+<!--more-->
 ### Sign-in sheets
 I usually include a sign-in sheet for our meetings. The sheets usually include space for name, email address, twitter handle, and a space for the attendee to write in a question or topic they'd like to discuss when we have some an open discussion. Usually attendees are already on members on [Meetup.com](http://www.meetup.com/) so it's easy enough to reach out to them but this provides another way to capture their contact info.
 

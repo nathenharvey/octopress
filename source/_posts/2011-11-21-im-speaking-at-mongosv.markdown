@@ -9,7 +9,7 @@ categories:
 
 [MongoSV](http://www.10gen.com/events/mongosv-2011) is an annual one-day conference in Silicon Valley dedicated to the open source, non-relational database MongoDB. The comprehensive agenda includes 50+ sessions covering topics for both the novice and experienced user, with presentations from 10gen engineers as well as MongoDB users.
 
-I'm one of the MongoDB users who will be speaking at the conference. The title of my talk is "*MongoDB at CustomInk - Adoption, Operations, and Community*"
+I'm one of the MongoDB users who will be speaking at the conference. The title of my talk is "**MongoDB at CustomInk - Adoption, Operations, and Community**"
 
 In this talk I'll detail some of the reasons we decided to go with MongoDB, the challenges we faced bringing it into the organization, how we're using it in production today, lessons learned, and some of our future plans. The talk will also describe some of the operational considerations for putting MongoDB into production: how do we deploy, operate, and monitor MongoDB. During this talk I'll also describe [CustomInk](http://www.customink.com)'s involvement in the MongoDB community.
 

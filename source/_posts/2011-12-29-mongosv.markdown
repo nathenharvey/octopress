@@ -60,8 +60,8 @@ The "developer happiness" that MongoDB affords does not make it immune to the "o
 ## Other videos and presentations
 Check-out [all of the presentations from the conference](http://www.10gen.com/presentations#event__mongosv-2011) on the 10gen site.
 
-## Quick thanks
-* Thanks to [10gen](http://10gen.com) for continually providing such great conferences. The single-day, multi-track at a low cost format works very well .
-* Thanks to [Busyconf](http://busyconf.com/) for creating **the best** app for conference schedules and hosting the [MongoSV schedule](http://mongosv2011.busyconf.com/schedule/full).
-* Thanks to Adam, Amelia, Francesca, Meghan, Sam, and everyone else for 10gen for organizing the [MongoDB Masters Summit](http://nathenharvey.com/blog/2011/12/29/mongodb-masters/) and MongoSV.
-* Thanks to everyone who came out to my presentation and to everyone I met at MongoSV
+## Quick thanks to...
+* [10gen](http://10gen.com) for continually providing such great conferences. The single-day, multi-track at a low cost format works very well .
+* [Busyconf](http://busyconf.com/) for creating **the best** app for conference schedules and hosting the [MongoSV schedule](http://mongosv2011.busyconf.com/schedule/full).
+* Adam, Amelia, Francesca, Meghan, Sam, and everyone else for 10gen for organizing the [MongoDB Masters Summit](http://nathenharvey.com/blog/2011/12/29/mongodb-masters/) and MongoSV.
+* everyone who came out to my presentation and to everyone I met at MongoSV

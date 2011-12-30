@@ -6,6 +6,7 @@ comments: true
 categories:
   - customink
   - devops
+  - heroku
   - opschef
   - puppet
   - ruby on rails

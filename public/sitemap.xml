@@ -22,7 +22,7 @@
         <loc>
             http://www.nathenharvey.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/
         </loc>
-        <lastmod>2011-12-29T10:10:27-05:00</lastmod>
+        <lastmod>2011-12-30T00:45:07-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.nathenharvey.com/blog/2011/11/21/im-speaking-at-mongosv/</loc>
@@ -53,11 +53,15 @@
         <lastmod>2011-12-30T00:40:43-05:00</lastmod>
     </url>
     <url>
+        <loc>http://www.nathenharvey.com/blog/2011/12/30/octopress/</loc>
+        <lastmod>2011-12-30T01:11:31-05:00</lastmod>
+    </url>
+    <url>
         <loc>http://www.nathenharvey.com/blog/archives/</loc>
-        <lastmod>2011-12-30T00:40:43-05:00</lastmod>
+        <lastmod>2011-12-30T01:11:31-05:00</lastmod>
     </url>
     <url>
         <loc>http://www.nathenharvey.com/</loc>
-        <lastmod>2011-12-30T00:40:43-05:00</lastmod>
+        <lastmod>2011-12-30T01:11:31-05:00</lastmod>
     </url>
 </urlset>

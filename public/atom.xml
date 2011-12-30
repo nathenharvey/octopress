@@ -4,7 +4,7 @@
   <title><![CDATA[Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2011-12-30T00:41:31-05:00</updated>
+  <updated>2011-12-30T01:13:28-05:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -12,6 +12,26 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress]]></title>
+    <link href="http://www.nathenharvey.com/blog/2011/12/30/octopress/"/>
+    <updated>2011-12-30T00:42:00-05:00</updated>
+    <id>http://www.nathenharvey.com/blog/2011/12/30/octopress</id>
+    <content type="html"><![CDATA[<p><img class="right" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/octopress.png" width="300" height="225" title="Octopress" alt="Octopress">
+I&#8217;ve recently switched my blog from <a href="http://www.blogger.com">Blogger</a> to <a href="http://octopress.org">Octopress</a>. After working with Blogger, WordPress, and TypePad I&#8217;ve found that the Octopress works best for my personal blog.</p>
+
+<p>Creating and editing posts in a text editor instead of a browser is a step-saver for me.  Previously I always worked with a local copy of each article and would cut-n-paste between my text editor and the browser.</p>
+
+<p>The rake- and git-based workflow feels very natural.  After all, this is a &#8220;blogging framework for hackers.&#8221;</p>
+
+<p>The standard layout and plugins are working well for me with little customization.</p>
+
+<p>Deploying is a snap. I&#8217;m currently using <a href="http://heroku.com">Heroku</a> to host the blog but could just as easily be using <a href="http://pages.github.com/">github:pages</a>.</p>
+
+<p>The simplicity and familiar workflow really make for an excellent blogging platform! Thanks <a href="http://twitter.com/imathis">@imathis</a> for giving us <a href="http://octopress.org">Octopress</a>!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MongoDB Community Awards]]></title>

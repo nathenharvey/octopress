@@ -22,10 +22,10 @@ There were [3 different categories](http://blog.10gen.com/post/12290733213/mongo
 1. **Community Champion Award** - recognizes an individual for their efforts evangelizing and growing the MongoDB community.
 
 This is the first year that 10gen has organized these awards. I think they're a great way to recognize the contributions made by a few members of the community. I hope a significant portion of people in the community took the time to nominate or vote for another individual.  I suspect more community members will participate and 10gen will do a more to advertise the program in years to come.
-
+<!--more-->
 ## Community Champion Award
 I was honored to be selected as a [finalist in the Community Champion category](http://blog.10gen.com/post/13835130448/voting-open-for-the-mongodb-community-awards-winners). As a co-organizer for both the [Washington DC MongoDB User Group](http://www.meetup.com/Washington-DC-MongoDB-Users-Group/) and [DevOps DC](http://www.meetup.com/DevOpsDC/), I work to bring together people who are interested in MongoDB and other great technologies. We've grown the MongoDB group to over 250 members through consistent meetings, detailed event summaries, and good beer. 
-<!--more-->
+
 ## I'm going to SXSW Interactive!
 {% img right http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/sxsw_interactive.png 352 169 "SXSW Interactive" "SXSW Interactive" %}
 

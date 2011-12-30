@@ -9,6 +9,7 @@ categories:
   - conferences
   - customink
   - mongodb
+  - mongosv
   - user groups
 ---
 {% img right http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/MongoSV_badge.png 320 156 "MongoSV" "MongoSV" %}

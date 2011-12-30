@@ -9,6 +9,8 @@ categories:
   - customink
   - meetup
   - mongodb
+  - mongomasters
+  - mongosv
 ---
 Shortly before [MongoSV 2011](http://blog.10gen.com/post/13885501875/announcing-the-mongodb-masters), 10gen announced the [MongoDB Masters](http://blog.10gen.com/post/13885501875/announcing-the-mongodb-masters) Program.
 

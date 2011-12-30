@@ -10,6 +10,7 @@ categories:
   - conferences
   - meetup
   - mongodb
+  - mongosv
   - shutterfly
 ---
 I was selected to share some of my experience with MongoDB at MongoSV.

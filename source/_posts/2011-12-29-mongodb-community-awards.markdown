@@ -10,6 +10,7 @@ categories:
   - conferences
   - meetup
   - mongodb
+  - mongosv
   - sxsw
   - user groups
 ---

@@ -21,6 +21,9 @@ We use Green Screen at [CustomInk](http://www.customink.com) to look after our c
 
 Green Screen is a simple Sinatra application that is [easy to configure and deploy](http://nathenharvey.com/blog/2012/01/02/deploying-green-screen).  It works well with any continuous integration server that conforms to the [multiple project summary reporting standard](http://confluence.public.thoughtworks.org/display/CI/Multiple+Project+Summary+Reporting+Standard).
 
+You can see a sample Green Screen app running at [http://greenscreenapp.com](http://greenscreenapp.com).  Be forewarned, this sample Green Screen looks at all of the builds currently running on [http://ci.jenkins-ci.org](http://ci.jenkins-ci.org).  This is fine for demo purposes but you may find it to be a bit overwhelming since it's **over 300 builds** at the time of this writing.
+
+
 <!--more-->
 
 ## History

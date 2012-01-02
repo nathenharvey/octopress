@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vagrant | Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/blog/categories/vagrant/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2011-12-30T11:41:27-05:00</updated>
+  <updated>2012-01-02T17:07:49-05:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -12,6 +12,108 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Deploying Green Screen]]></title>
+    <link href="http://www.nathenharvey.com/blog/2012/01/02/deploying-green-screen/"/>
+    <updated>2012-01-02T16:59:00-05:00</updated>
+    <id>http://www.nathenharvey.com/blog/2012/01/02/deploying-green-screen</id>
+    <content type="html"><![CDATA[<p>In my <a href="http://nathenharvey.com/blog/2012/01/02/green-screen/">previous post</a>, I introduced Green Screen, a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area.  It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.</p>
+
+<p>It is easy enough to get Green Screen up and running on your own server or VM. The project's README includes all the information you'll need for doing so. In this post, I'll describe the steps necessary to run Green Screen on Heroku or on your own server using Chef.</p>
+
+<h2>Deploying to Heroku</h2>
+
+<p>Deploying to <a href="http://www.heroku.com/">Heroku</a> is probably the easiest way to get up and running with Green Screen. You'll need a Heroku account but a free one should be sufficient. Check the <a href="http://devcenter.heroku.com/articles/quickstart">quick start guide</a> if you don't yet have an account.</p>
+
+<p>Once you've got your Heroku account set-up, simply follow these steps to get your Green Screen app deployed:</p>
+
+<ol>
+<li><code>git clone git@github.com:customink/greenscreen.git</code></li>
+<li><code>cd greenscreen</code></li>
+<li><code>gem install heroku</code></li>
+<li><code>heroku create</code></li>
+<li><code>git push heroku master</code></li>
+<li><code>heroku open</code></li>
+</ol>
+
+
+<p>If your build servers are running on the Internet, Heroku may be all that you need.</p>
+
+<p><strong>Warning</strong> this default Green Screen looks at all of the builds currently running on <a href="http://ci.jenkins-ci.org">http://ci.jenkins-ci.org</a>.  This is fine for demo purposes but you may find it to be a bit overwhelming since it's <strong>over 300 builds</strong> at the time of this writing.</p>
+
+<p>You can see a sample of this app running at <a href="http://greenscreenapp.com">http://greenscreenapp.com</a></p>
+
+<!--more-->
+
+
+<h2>Deploying with Chef</h2>
+
+<p>If your build servers are not publicly accessible, Heroku won't be a great option. <a href="http://www.customink.com">CustomInk</a> has published a <a href="https://github.com/customink-webops/greenscreen">Chef cookbook</a> for setting up Green Screen on one of your nodes.</p>
+
+<p>You simply need to include the greenscreen recipe to install, configure, and run one or more GreenScreen applications.  Or add it to your role, or directly to a node's recipes.</p>
+
+<p><code>ruby
+include_recipe "greenscreen"
+</code></p>
+
+<p>Of course, if you're just getting started with Chef, you should look at <a href="http://vagrantup.com/">Vagrant</a> which is a tool for building and distributing virtualized development environments. With Vagrant, you can quickly spin-up a VM in <a href="http://www.virtualbox.org/">VirtualBox</a> and have it use the greenscreen cookbook.</p>
+
+<p>The cookbook allows you to specify credentials and jobs to include or ignore with each server and allows you to set-up multiple Green Screens on the same node. At CustomInk, we use different Green Screen applications for different teams.</p>
+
+<p>Here's an excerpt from one of our Chef environment files:</p>
+
+<p>``` ruby
+"greenscreens" => [
+  {</p>
+
+<pre><code>:name =&gt; "greenscreen",
+:port =&gt; "4567",
+:servers =&gt; [
+  {
+    :url =&gt; "http://build01.customink.office:8080/cc.xml"
+  },
+  {
+    :url =&gt; "http://build02.customink.office:8080/cc.xml",
+    :username =&gt; "hudson",
+    :password =&gt; "hudson_password"
+  },
+  {
+    :url =&gt; "http://build03.customink.office:8080/cc.xml",
+    :username =&gt; "hudson",
+    :password =&gt; "hudson_password",
+    :ignore_jobs =&gt; ["www_redirects"]
+  }
+]
+</code></pre>
+
+<p>  },
+  {</p>
+
+<pre><code>:name =&gt; "greenscreen.webops",
+:port =&gt; "4568",
+:servers =&gt; [
+  {
+    :url =&gt; "http://build03.customink.office:8080/cc.xml",
+    :username =&gt; "hudson",
+    :password =&gt; "hudson_password",
+    :jobs =&gt; ["www_redirects"]
+  },
+  {
+    :url =&gt; "http://build04.customink.office/cc.xml",
+    :username =&gt; "jenkins",
+    :password =&gt; "jenkis_password"
+  }
+]
+</code></pre>
+
+<p>  }
+]
+```</p>
+
+<p>With this configuration, we have 2 Green Screens running, on ports 4567 and 4568. Both are polling build servers and showing different jobs. For instance, the server on 4567 excludes the www_redirects build (<code>:ignore_jobs =&gt; ["www_redirects"]</code>) whereas the server on 4568 only includes this build (<code>:jobs =&gt; ["www_redirects"]</code>) when polling the build03 server.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Vagrant and VBoxManage import]]></title>

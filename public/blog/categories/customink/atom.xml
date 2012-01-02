@@ -4,7 +4,7 @@
   <title><![CDATA[Category: customink | Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/blog/categories/customink/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2011-12-30T11:41:27-05:00</updated>
+  <updated>2012-01-02T17:07:49-05:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -12,6 +12,153 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Deploying Green Screen]]></title>
+    <link href="http://www.nathenharvey.com/blog/2012/01/02/deploying-green-screen/"/>
+    <updated>2012-01-02T16:59:00-05:00</updated>
+    <id>http://www.nathenharvey.com/blog/2012/01/02/deploying-green-screen</id>
+    <content type="html"><![CDATA[<p>In my <a href="http://nathenharvey.com/blog/2012/01/02/green-screen/">previous post</a>, I introduced Green Screen, a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area.  It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.</p>
+
+<p>It is easy enough to get Green Screen up and running on your own server or VM. The project's README includes all the information you'll need for doing so. In this post, I'll describe the steps necessary to run Green Screen on Heroku or on your own server using Chef.</p>
+
+<h2>Deploying to Heroku</h2>
+
+<p>Deploying to <a href="http://www.heroku.com/">Heroku</a> is probably the easiest way to get up and running with Green Screen. You'll need a Heroku account but a free one should be sufficient. Check the <a href="http://devcenter.heroku.com/articles/quickstart">quick start guide</a> if you don't yet have an account.</p>
+
+<p>Once you've got your Heroku account set-up, simply follow these steps to get your Green Screen app deployed:</p>
+
+<ol>
+<li><code>git clone git@github.com:customink/greenscreen.git</code></li>
+<li><code>cd greenscreen</code></li>
+<li><code>gem install heroku</code></li>
+<li><code>heroku create</code></li>
+<li><code>git push heroku master</code></li>
+<li><code>heroku open</code></li>
+</ol>
+
+
+<p>If your build servers are running on the Internet, Heroku may be all that you need.</p>
+
+<p><strong>Warning</strong> this default Green Screen looks at all of the builds currently running on <a href="http://ci.jenkins-ci.org">http://ci.jenkins-ci.org</a>.  This is fine for demo purposes but you may find it to be a bit overwhelming since it's <strong>over 300 builds</strong> at the time of this writing.</p>
+
+<p>You can see a sample of this app running at <a href="http://greenscreenapp.com">http://greenscreenapp.com</a></p>
+
+<!--more-->
+
+
+<h2>Deploying with Chef</h2>
+
+<p>If your build servers are not publicly accessible, Heroku won't be a great option. <a href="http://www.customink.com">CustomInk</a> has published a <a href="https://github.com/customink-webops/greenscreen">Chef cookbook</a> for setting up Green Screen on one of your nodes.</p>
+
+<p>You simply need to include the greenscreen recipe to install, configure, and run one or more GreenScreen applications.  Or add it to your role, or directly to a node's recipes.</p>
+
+<p><code>ruby
+include_recipe "greenscreen"
+</code></p>
+
+<p>Of course, if you're just getting started with Chef, you should look at <a href="http://vagrantup.com/">Vagrant</a> which is a tool for building and distributing virtualized development environments. With Vagrant, you can quickly spin-up a VM in <a href="http://www.virtualbox.org/">VirtualBox</a> and have it use the greenscreen cookbook.</p>
+
+<p>The cookbook allows you to specify credentials and jobs to include or ignore with each server and allows you to set-up multiple Green Screens on the same node. At CustomInk, we use different Green Screen applications for different teams.</p>
+
+<p>Here's an excerpt from one of our Chef environment files:</p>
+
+<p>``` ruby
+"greenscreens" => [
+  {</p>
+
+<pre><code>:name =&gt; "greenscreen",
+:port =&gt; "4567",
+:servers =&gt; [
+  {
+    :url =&gt; "http://build01.customink.office:8080/cc.xml"
+  },
+  {
+    :url =&gt; "http://build02.customink.office:8080/cc.xml",
+    :username =&gt; "hudson",
+    :password =&gt; "hudson_password"
+  },
+  {
+    :url =&gt; "http://build03.customink.office:8080/cc.xml",
+    :username =&gt; "hudson",
+    :password =&gt; "hudson_password",
+    :ignore_jobs =&gt; ["www_redirects"]
+  }
+]
+</code></pre>
+
+<p>  },
+  {</p>
+
+<pre><code>:name =&gt; "greenscreen.webops",
+:port =&gt; "4568",
+:servers =&gt; [
+  {
+    :url =&gt; "http://build03.customink.office:8080/cc.xml",
+    :username =&gt; "hudson",
+    :password =&gt; "hudson_password",
+    :jobs =&gt; ["www_redirects"]
+  },
+  {
+    :url =&gt; "http://build04.customink.office/cc.xml",
+    :username =&gt; "jenkins",
+    :password =&gt; "jenkis_password"
+  }
+]
+</code></pre>
+
+<p>  }
+]
+```</p>
+
+<p>With this configuration, we have 2 Green Screens running, on ports 4567 and 4568. Both are polling build servers and showing different jobs. For instance, the server on 4567 excludes the www_redirects build (<code>:ignore_jobs =&gt; ["www_redirects"]</code>) whereas the server on 4568 only includes this build (<code>:jobs =&gt; ["www_redirects"]</code>) when polling the build03 server.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Green Screen]]></title>
+    <link href="http://www.nathenharvey.com/blog/2012/01/02/green-screen/"/>
+    <updated>2012-01-02T14:17:00-05:00</updated>
+    <id>http://www.nathenharvey.com/blog/2012/01/02/green-screen</id>
+    <content type="html"><![CDATA[<p>Green Screen is a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area. It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.</p>
+
+<p><img class="right" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/greenscreen.jpg" width="300" height="225" title="Green Screen Monitor" alt="Green Screen Monitor">
+We use Green Screen at <a href="http://www.customink.com">CustomInk</a> to look after our continuous integration servers, currently 3 Hudson servers and one Jenkins cluster. We have a monitor mounted in the engineering office that makes it easy for everyone to quickly assess the build status.</p>
+
+<p>Green Screen is a simple Sinatra application that is <a href="http://nathenharvey.com/blog/2012/01/02/deploying-green-screen">easy to configure and deploy</a>.  It works well with any continuous integration server that conforms to the <a href="http://confluence.public.thoughtworks.org/display/CI/Multiple+Project+Summary+Reporting+Standard">multiple project summary reporting standard</a>.</p>
+
+<!--more-->
+
+
+<h2>Lineage</h2>
+
+<p>Green Screen was originally implemented by <a href="https://github.com/martinjandrews">Marty Andrews</a> and <a href="http://blog.martyandrews.net/2009/08/greenscreen-build-monitor-bvc.html">announced on his blog in 2009</a>. In the original version, a build that was in progress would blink on the screen.
+<a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4565_building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4565_building.jpg" width="208" height="145" title="martinjandrews Green Screen" alt="martinjandrews Green Screen"></a></p>
+
+<p><a href="https://github.com/rsutphin">Rhett Sutphin</a> improved the layout of green screen and introduced a new color, yellow, for builds that are in progress.
+<a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4566-building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4566-building.jpg" width="207" height="145" title="rsutphin Green Screen" alt="rsutphin Green Screen"></a></p>
+
+<p>After using these versions for a while at CustomInk, we decided that the most important thing to know was which builds were failing. Once you get past a handful of builds, it's no longer very interesting to see every build. We forked Rhett's version and created a new layout for Green Screen.</p>
+
+<p>If everything is passing, the screen is basically one giant checkmark.</p>
+
+<p><a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/green.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/green.jpg" width="210" height="119" title="customink Green Screen" alt="customink Green Screen"></a></p>
+
+<p>If there are any failing builds, they're shown in the main area while all others are displayed on the right.</p>
+
+<p><a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567.jpg" width="210" height="121" title="customink failed build" alt="customink failed build"></a></p>
+
+<p>Finally, a build that previously failed will be shown in yellow while it's rebuilding.</p>
+
+<p><a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567_building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567_building.jpg" width="210" height="121" title="customink building" alt="customink building">
+</a>
+We've also added support for controlling which builds are displayed from each CI server. So that you can explicitly include or exclude builds or just go with the default behavior of showing all builds on the server.</p>
+
+<h2>Deploying</h2>
+
+<p>I'll cover a couple of deployment options for Green Screen in my <a href="http://nathenharvey.com/blog/2012/01/02/deploying-green-screen">next post</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MongoSV]]></title>
@@ -228,100 +375,6 @@ I also agree with some of 10gen's concern that search is like a pandora's box. O
 <p>What suggestions do you have? Please leave a comment or get in touch with me.</p>
 
 <p>Also, checkout my <a href="http://nathenharvey.com/blog/2011/12/13/tips-for-hosting-a-tech-user-group/">previous post</a> where I gave some <a href="http://nathenharvey.com/blog/2011/12/13/tips-for-hosting-a-tech-user-group/">ideas about how to run a successful user group meeting</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Tips for Hosting a Tech User Group]]></title>
-    <link href="http://www.nathenharvey.com/blog/2011/12/13/tips-for-hosting-a-tech-user-group/"/>
-    <updated>2011-12-13T19:24:00-05:00</updated>
-    <id>http://www.nathenharvey.com/blog/2011/12/13/tips-for-hosting-a-tech-user-group</id>
-    <content type="html"><![CDATA[<p>In January of 2011, I started hosting a <a href="http://www.meetup.com/Washington-DC-MongoDB-Users-Group/">monthly MongoDB meetup</a>. My employer, <a href="http://www.customink.com/">CustomInk</a>, was looking for ways to become better known in the local DC technology market. We were also just getting started with our initial production deployment of MonogoDB. Having engineers from the area come to our office, get to know CustomInk, and share their experiences with using MongoDB was a great opportunity!</p>
-
-<p>Before I get much further, I'd like to give a hat tip to those user groups and podcasts that I learned from and stole ideas from. Namely, <a href="http://www.meetup.com/dcruby/">DC RUG</a>, <a href="http://www.meetup.com/bmore-on-rails/">B'more on Rails group</a>, and the <a href="http://rubyrogues.com/">Ruby Rogues podcast</a>.</p>
-
-<p>Having a good space for hosting these types of meetings is important. CustomInk has two different spaces that we can utilize. The Parlour is a very cozy sitting room that includes a fireplace. It's suitable for a groups of up to 30 people. The Cafe is quite a bit larger, we can host up to 80 people there. We also have a very nice outdoor patio which could hold 80 people but planning weather-dependent meetings doesn't feel like the right way to go. The patio is connected to both the Parlour and the Cafe so networking at the beginning of the meeting sometimes happens there.</p>
-
-<p>Our success hosting the <a href="http://www.meetup.com/Washington-DC-MongoDB-Users-Group/">MongoDB User Group</a> has led to us hosting a number of other meetups. We are the regular host for the <a href="http://www.meetup.com/DevOpsDC/">DevOps DC</a> meetup and have hosted events for <a href="http://www.meetup.com/ncagtug/events/17035395/">Android application development</a>, <a href="http://www.meetup.com/R-users-DC/events/37862562/">R user group</a>, <a href="http://www.meetup.com/NoVa-Javascript-Ext-JS-Users-Group/events/36841452/">JavaScript user group</a>, and a <a href="http://www.meetup.com/TwitterTeaTimeDC/events/38265862/">Twitter API meetup</a>.</p>
-
-<p>The MongoDB group now includes over 250 members and the DevOps DC group is over 100. Based on our experience, I believe there are a number of things that you can do to grow and run a successful meetup group.</p>
-
-<!--more-->
-
-
-<h3>Consistent date, time, location</h3>
-
-<p>Having a consistent date, time, and location may be one of the most important things you can do. This allows members to plan their schedule and their commute. Finding the location of any meetup can be an anxiety-filled experience for some people. Is this the right building? Which floor is this meeting on? There's comfort in knowing that next month's meeting will happen in the same space as this month's. You may feel it would be better to alternate locations. We've certainly had some requests for this in the groups we regularly host. Based on feedback from other groups and some of our own experience, this is a bad idea. We've seen or heard of too many members missing meetings because they went to the "other" location. For the MongoDB group, we meet on the third Wednesday of the month at 6:30. Pick a day and time that works best for you and stick with it.</p>
-
-<p>A location that is easily accessible via public transportation is certainly desirable but may not always be feasible.</p>
-
-<h3>Encourage member participation</h3>
-
-<p>Once you've got everyone at your meetup it's important that you make this a warm, welcoming place where members feel comfortable and are encouraged to participate. We ask attendees to introduce themselves, share a pick, and contribute during open discussions.</p>
-
-<h3>Register a twitter account</h3>
-
-<p>A twitter handle that matches your group is a great way to help promote your meetings and encourage attendance. I use <a href="http://twitter.com/mongodc">@MongoDC</a> and will frequently tweet about topics that our members are interested in. Of course, the primary use of the account is to announce upcoming meetings and speakers. However, I also use it for sharing MongoDB related news such as <a href="https://twitter.com/#!/MongoDC/status/113307839249907713">product releases</a> and <a href="https://twitter.com/#!/MongoDC/status/135041129455427584">upcoming conferences</a>. Additionally, we ask our members to share their twitter handle when they arrive. This allows me to put together a <a href="https://twitter.com/#!/MongoDC/mongodc-16-nov-2011/members">Twitter list</a> of the people who attended (an idea I stole from the <a href="http://www.meetup.com/bmore-on-rails/">B'more on Rails group</a>).</p>
-
-<h3>Feed the group</h3>
-
-<p>You're probably scheduling your meetings right around the same time that most people would otherwise be eating dinner. CustomInk provides pizza, sodas, and beer for each meetup. Personally, I'm a bit of a beer lover so try to provide a unique offering at each meeting. This a good sponsorship opportunity for companies interested in reaching your group, too.</p>
-
-<h3>Give away FREE stuff</h3>
-
-<p>What's a user group meeting without some sort of free swag? <a href="http://www.10gen.com/">10gen</a>, the company behind MongoDB, is great about making sure I always have something to give away at the meetings. Quick reference cards, stickers, and coffee mugs are usually in ample supply. Occasionally, we'll have a books, conference tickets or discounts, or other special swag that we can giveaway, too.</p>
-
-<h3>Wifi</h3>
-
-<p>Provide free wifi to your attendees. It's frustrating to go to a technical meeting without wifi.</p>
-
-<h3>Leverage Meetup.com</h3>
-
-<p><a href="http://www.meetup.com/">Meetup.com</a> has a lot of great tools to help you organize meetings, communicate with individual members or with the entire group, and more. Be sure to checkout the "Organizer Tips" available under the "Group Tools" menu. Create a presence on Facebook, LinkedIn, Twitter, or anywhere else your members or potential members are going to be but always link back to the group's page on meetup.com. Use the meetup site to post any presentations from your meetings. I also find it's very helpful to <a href="http://www.meetup.com/Washington-DC-MongoDB-Users-Group/pages/November_Meetup_Recap/">summarize your meetings on the site</a>. This gives attendees easy access to everything that happened and gives new members an idea about the content and quality of the meetings.</p>
-
-<p>It might also be interesting to have a page on the Meetup site where your members can highlight their own open source contributions. Perhaps they've contributed to a MongoDB driver?</p>
-
-<p>There are other sites that offer similar functionality to Meetup.com but I firmly believe Meetup.com is the best. It's where many people go to look for interesting groups and the tools they provide are great.</p>
-
-<h3>Other ideas</h3>
-
-<p>Lately, I've been kicking around the idea of having a group library. Members and publisher could contribute books that the group might be interested in. Each book could be "borrowed" for up to a month. Have you had any experience with a user group that's done this?</p>
-
-<p>For some more great suggestions, including suggestions on how to get great presenters, check out <a href="https://twitter.com/cwestin63">Chris Westin's</a> blog post - <a href="https://www.bookofbrilliantthings.com/blog/how-to-run-a-successful-tech-meetup">How to Run a Successful Tech Meetup</a>.</p>
-
-<p>What suggestions do you have? Please leave a comment or get in touch with me.</p>
-
-<p>In my <a href="http://nathenharvey.com/blog/2011/12/13/agenda-tips-for-a-tech-user-group/">next post</a>, I'll provide <a href="http://nathenharvey.com/blog/2011/12/13/agenda-tips-for-a-tech-user-group/">some suggestions on the agenda / format for each meeting</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[I'm Speaking at MongoSV]]></title>
-    <link href="http://www.nathenharvey.com/blog/2011/11/21/im-speaking-at-mongosv/"/>
-    <updated>2011-11-21T03:57:00-05:00</updated>
-    <id>http://www.nathenharvey.com/blog/2011/11/21/im-speaking-at-mongosv</id>
-    <content type="html"><![CDATA[<p><img class="right" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/MongoSV_badge.png" width="320" height="156" title="MongoSV" alt="MongoSV"></p>
-
-<p><a href="http://www.10gen.com/events/mongosv-2011">MongoSV</a> is an annual one-day conference in Silicon Valley dedicated to the open source, non-relational database MongoDB. The comprehensive agenda includes 50+ sessions covering topics for both the novice and experienced user, with presentations from 10gen engineers as well as MongoDB users.</p>
-
-<p>I'm one of the MongoDB users who will be speaking at the conference. The title of my talk is "<strong>MongoDB at CustomInk - Adoption, Operations, and Community</strong>"</p>
-
-<p>In this talk I'll detail some of the reasons we decided to go with MongoDB, the challenges we faced bringing it into the organization, how we're using it in production today, lessons learned, and some of our future plans. The talk will also describe some of the operational considerations for putting MongoDB into production: how do we deploy, operate, and monitor MongoDB. During this talk I'll also describe <a href="http://www.customink.com">CustomInk</a>'s involvement in the MongoDB community.</p>
-
-<p>Since January, CustomInk has been hosting the <a href="http://www.meetup.com/Washington-DC-MongoDB-Users-Group">Washington DC MongoDB Users Group</a>. I'll share some of my experience with, tips for, and lessons learned growing a monthly user group.</p>
-
-<p>The talk will be a refreshed and expanded version of the presentation I gave at <a href="http://www.10gen.com/events/mongodc-2011">MongoDC</a> back in June. You can find <a href="http://speakerrate.com/events/985-mongodc">slides and reviews from MongoDC on SpeakerRate</a>.</p>
-
-<p><a href="http://www.10gen.com/">10gen</a> does a great job with these conferences. They're always packed full of great information and you'll get to meets lots of people from the community. MongoSV is the largest of these one-day conferences that 10gen organizes. This year, the conference also includes the <a href="https://docs.google.com/spreadsheet/viewform?formkey=dGNvYzNpY3BTMHFrZWRVLVpuTktoSmc6MQ">MongoDB Community Awards</a> where you can nominate someone in three different categories:</p>
-
-<ul>
-<li>Innovative Application</li>
-<li>Community Champion</li>
-<li>Contributor</li>
-</ul>
-
-
-<p>If you're in Santa Clara on December 9th, or need a reason to be, be sure to stop by MongoSV. I have a discount code I can share with you to lower the cost of admission significantly, just let me know if you're interested.</p>
 ]]></content>
   </entry>
   

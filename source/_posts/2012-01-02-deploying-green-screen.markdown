@@ -21,10 +21,10 @@ categories:
   - virtualbox
   - web operations
 ---
-In my [previous post](http://nathenharvey.com/blog/2012/01/02/green-screen/), I introduced Green Screen, a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area.  It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.
+In my [previous post](http://nathenharvey.com/blog/2012/01/02/green-screen/), I introduced [Green Screen](https://github.com/customink/greenscreen), a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area.  It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.
 
 
-It is easy enough to get Green Screen up and running on your own server or VM. The project's README includes all the information you'll need for doing so. In this post, I'll describe the steps necessary to run Green Screen on Heroku or on your own server using Chef.
+It is easy enough to get [Green Screen](https://github.com/customink/greenscreen) up and running on your own server or VM. The project's [README](https://github.com/customink/greenscreen/blob/master/README.md) includes all the information you'll need for doing so. In this post, I'll describe the steps necessary to run Green Screen on Heroku or on your own server using Chef.
 
 ## Deploying to Heroku
 

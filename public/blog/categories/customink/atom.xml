@@ -4,7 +4,7 @@
   <title><![CDATA[Category: customink | Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/blog/categories/customink/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2012-01-02T17:07:49-05:00</updated>
+  <updated>2012-01-02T17:21:40-05:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -18,9 +18,9 @@
     <link href="http://www.nathenharvey.com/blog/2012/01/02/deploying-green-screen/"/>
     <updated>2012-01-02T16:59:00-05:00</updated>
     <id>http://www.nathenharvey.com/blog/2012/01/02/deploying-green-screen</id>
-    <content type="html"><![CDATA[<p>In my <a href="http://nathenharvey.com/blog/2012/01/02/green-screen/">previous post</a>, I introduced Green Screen, a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area.  It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.</p>
+    <content type="html"><![CDATA[<p>In my <a href="http://nathenharvey.com/blog/2012/01/02/green-screen/">previous post</a>, I introduced <a href="https://github.com/customink/greenscreen">Green Screen</a>, a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area.  It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.</p>
 
-<p>It is easy enough to get Green Screen up and running on your own server or VM. The project's README includes all the information you'll need for doing so. In this post, I'll describe the steps necessary to run Green Screen on Heroku or on your own server using Chef.</p>
+<p>It is easy enough to get <a href="https://github.com/customink/greenscreen">Green Screen</a> up and running on your own server or VM. The project's <a href="https://github.com/customink/greenscreen/blob/master/README.md">README</a> includes all the information you'll need for doing so. In this post, I'll describe the steps necessary to run Green Screen on Heroku or on your own server using Chef.</p>
 
 <h2>Deploying to Heroku</h2>
 
@@ -120,7 +120,7 @@ include_recipe "greenscreen"
     <link href="http://www.nathenharvey.com/blog/2012/01/02/green-screen/"/>
     <updated>2012-01-02T14:17:00-05:00</updated>
     <id>http://www.nathenharvey.com/blog/2012/01/02/green-screen</id>
-    <content type="html"><![CDATA[<p>Green Screen is a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area. It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.</p>
+    <content type="html"><![CDATA[<p><a href="https://github.com/customink/greenscreen">Green Screen</a> is a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area. It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.</p>
 
 <p><img class="right" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/greenscreen.jpg" width="300" height="225" title="Green Screen Monitor" alt="Green Screen Monitor">
 We use Green Screen at <a href="http://www.customink.com">CustomInk</a> to look after our continuous integration servers, currently 3 Hudson servers and one Jenkins cluster. We have a monitor mounted in the engineering office that makes it easy for everyone to quickly assess the build status.</p>
@@ -130,7 +130,7 @@ We use Green Screen at <a href="http://www.customink.com">CustomInk</a> to look 
 <!--more-->
 
 
-<h2>Lineage</h2>
+<h2>History</h2>
 
 <p>Green Screen was originally implemented by <a href="https://github.com/martinjandrews">Marty Andrews</a> and <a href="http://blog.martyandrews.net/2009/08/greenscreen-build-monitor-bvc.html">announced on his blog in 2009</a>. In the original version, a build that was in progress would blink on the screen.
 <a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4565_building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4565_building.jpg" width="208" height="145" title="martinjandrews Green Screen" alt="martinjandrews Green Screen"></a></p>
@@ -138,7 +138,7 @@ We use Green Screen at <a href="http://www.customink.com">CustomInk</a> to look 
 <p><a href="https://github.com/rsutphin">Rhett Sutphin</a> improved the layout of green screen and introduced a new color, yellow, for builds that are in progress.
 <a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4566-building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4566-building.jpg" width="207" height="145" title="rsutphin Green Screen" alt="rsutphin Green Screen"></a></p>
 
-<p>After using these versions for a while at CustomInk, we decided that the most important thing to know was which builds were failing. Once you get past a handful of builds, it's no longer very interesting to see every build. We forked Rhett's version and created a new layout for Green Screen.</p>
+<p>After using these versions for a while at CustomInk, we decided that the most important thing to know was which builds were failing. Once you get past a handful of builds, it's no longer very interesting to see every build. We forked Rhett's version and created a <a href="https://github.com/customink/greenscreen">new layout for Green Screen</a>.</p>
 
 <p>If everything is passing, the screen is basically one giant checkmark.</p>
 

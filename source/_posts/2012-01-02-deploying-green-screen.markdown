@@ -49,7 +49,7 @@ You can see a sample of this app running at [http://greenscreenapp.com](http://g
 
 ## Deploying with Chef
 
-If your build servers are not publicly accessible, Heroku won't be a great option. [CustomInk](http://www.customink.com) has published a [Chef cookbook](https://github.com/customink-webops/greenscreen) for setting up Green Screen on one of your nodes.
+If your build servers are not publicly accessible, Heroku won't be a great option. [CustomInk](http://www.customink.com) has published a [Chef cookbook](http://community.opscode.com/cookbooks/greenscreen) for setting up Green Screen on one of your nodes.
 
 You simply need to include the greenscreen recipe to install, configure, and run one or more GreenScreen applications.  Or add it to your role, or directly to a node's recipes.
 

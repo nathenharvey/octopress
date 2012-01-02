@@ -4,7 +4,7 @@
   <title><![CDATA[Category: sysadmin | Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/blog/categories/sysadmin/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2012-01-02T17:21:40-05:00</updated>
+  <updated>2012-01-02T17:25:11-05:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -49,7 +49,7 @@
 
 <h2>Deploying with Chef</h2>
 
-<p>If your build servers are not publicly accessible, Heroku won't be a great option. <a href="http://www.customink.com">CustomInk</a> has published a <a href="https://github.com/customink-webops/greenscreen">Chef cookbook</a> for setting up Green Screen on one of your nodes.</p>
+<p>If your build servers are not publicly accessible, Heroku won't be a great option. <a href="http://www.customink.com">CustomInk</a> has published a <a href="http://community.opscode.com/cookbooks/greenscreen">Chef cookbook</a> for setting up Green Screen on one of your nodes.</p>
 
 <p>You simply need to include the greenscreen recipe to install, configure, and run one or more GreenScreen applications.  Or add it to your role, or directly to a node's recipes.</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: sysadmin | Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/blog/categories/sysadmin/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2012-03-19T10:56:46-04:00</updated>
+  <updated>2012-05-25T14:49:21-04:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Taming the Kraken - How Operations enables developer productivity]]></title>
+    <link href="http://www.nathenharvey.com/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/"/>
+    <updated>2012-05-25T14:31:00-04:00</updated>
+    <id>http://www.nathenharvey.com/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity</id>
+    <content type="html"><![CDATA[<p>At <a href="http://railsconf2012.com/">RailsConf 2012</a>, I gave a presentation on how our web operations team enables developer productivity.</p>
+
+<p>There's always a bit of tension when getting features from idea to production. In this talk, I describe some of the changes CustomInk has made to reduce this friction and keep the new features coming. Gone are the days of bi-monthly deploys, office pools dedicated to guessing when this deploy will be rolled back, and the ceremony surrounding the deploy-rollback-fix-deploy cycle. Today, ideas flow from product managers to developers to production with ease thanks to a number of changes that we've made to our teams, processes and tools.</p>
+
+<p>Presenting at RailsConf was a really enjoyable experience and the presentation was well received.  There were lots of questions from the audience after the presentation.  Unfortunately, the Q &amp; A section was not captured in the video.  I'd really appreciate any questions or feedback you have, just drop a comment below.</p>
+
+<h3>Video</h3>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/5vzNzQzmAk0" frameborder="0" allowfullscreen></iframe>
+
+
+<h3>Slides</h3>
+
+<script async class="speakerdeck-embed" data-id="4f96da12947c45001f018683" data-ratio="1.2945638432364097" src="http://www.nathenharvey.com//speakerdeck.com/assets/embed.js"></script>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Deploying Green Screen]]></title>
@@ -284,29 +307,6 @@ cd ~/.vagrant/boxes/base</p>
 ```</p>
 
 <p>To get around this, I simply removed <code>~/Library/VirtualBox/VirtualBox.xml</code>. I was then able to vagrant up and continue on with my Chef cookbook.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Testing mod_rewrite and apache redirects]]></title>
-    <link href="http://www.nathenharvey.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/"/>
-    <updated>2010-07-16T09:00:00-04:00</updated>
-    <id>http://www.nathenharvey.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects</id>
-    <content type="html"><![CDATA[<p>At <a href="http://www.customink.com">CustomInk</a>, we recently migrated from mongrel to Passenger for our Ruby on Rails website. This migration included a full rewrite of our apache configuration files.</p>
-
-<p>With over 500 redirect and rewrite rules in place I needed a way to ensure my copy-n-paste skills were up to snuff and that we didn't loose any redirects along the way.</p>
-
-<p>In my search for help, I found a <a href="http://www.viget.com/extend/test-drive-mod-rewrite-rules-with-testunit/">blog post by Patrick Reagan from Viget labs</a> that described a method for writing tests that will verify all the rewrite rules and redirects. Patrick's ideas were packaged up into a gem and available on <a href="http://github.com/eightbitraptor/http_redirect_test">github</a>.</p>
-
-<p>I can now write up tests like:</p>
-
-<p><code>ruby
-should_redirect "/cink/ideas/ideas.jsp", :to =&gt; "/inspiration/"
-</code></p>
-
-<p>So now I can to some TDC (test-driven configuration) whenever I get a request for a new redirect.</p>
-
-<p>What other methods have you used to test your rewrite rules?</p>
 ]]></content>
   </entry>
   

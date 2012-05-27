@@ -4,7 +4,7 @@
   <title><![CDATA[Category: chef | Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/blog/categories/chef/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2012-05-25T15:16:43-04:00</updated>
+  <updated>2012-05-26T23:34:05-04:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -12,6 +12,59 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[5 Things You Always Wanted to Know About Chef]]></title>
+    <link href="http://www.nathenharvey.com/blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/"/>
+    <updated>2012-05-26T21:51:00-04:00</updated>
+    <id>http://www.nathenharvey.com/blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef</id>
+    <content type="html"><![CDATA[<p>When I first started working with Chef, there were a couple of areas that I knew were going to be really awesome and helpful but I wasn't sure how to get started with them.  In this presentation, I'll provide a quick introduction to five things you've always wanted to know about Chef but were afraid to ask.</p>
+
+<p>Level-up your Chef skills by learning about these areas of Chef:</p>
+
+<ul>
+<li><strong>Attribute Precedence</strong> - Role, environment, cookbook, data bag? Which attribute value will be used in my chef run?</li>
+<li><strong>Encrypted Databags</strong> - Chef 0.10 brought us encrypted databags. We'll look at how to create and use databags and how to keep them up-to-date in your repository.</li>
+<li><strong>LWRP</strong> - What is a LWRP? How and why do you create one? We'll look at a couple of sample LWRPs and learn how to build a simple one.</li>
+<li><strong>Error Handlers</strong> - Demystify exception and report handlers by writing a simple one and seeing examples of how they work in the wild.</li>
+<li><strong>Capistrano and Chef</strong> - Take a quick look at why and how to integrate Chef search into your Capistrano configuration to make deploying your Rails apps even easier.</li>
+</ul>
+
+
+<p>One thing I didn't mention in the presentation was how to use the data from the encrypted data bag.  I've updated the slides to include this info but it doesn't appear in the video.  In any case, here's a quick demo of how you might use it:</p>
+
+<p>``` ruby
+creds = Chef::EncryptedDataBagItem.load("db", "creds")
+env_db_creds = db_creds[node["rails_env"]]</p>
+
+<p>template "#{app_dir}/shared/config/database.yml" do
+  source "database.yml.erb"
+  variables(</p>
+
+<pre><code>:rails_env =&gt; node["rails_env"],
+:username =&gt; env_db_creds["username"],
+:password =&gt; env_db_creds["password"]
+</code></pre>
+
+<p>  )
+end
+```</p>
+
+<h3>Video</h3>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/uREL4FFPddo" frameborder="0" allowfullscreen></iframe>
+
+
+<h3>Slides</h3>
+
+<script async class="speakerdeck-embed" data-id="4fb532f2850667001f0008f8" data-ratio="1.2945638432364097" src="http://www.nathenharvey.com//speakerdeck.com/assets/embed.js"></script>
+
+
+<hr />
+
+<p><sub>Reposted from the <a href="http://technology.customink.com/blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/">CustomInk Technology blog</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The Joy of Cooking - Whip Up a Rails Environment with Chef]]></title>
@@ -222,45 +275,6 @@ include_recipe "greenscreen"
 ```</p>
 
 <p>With this configuration, we have 2 Green Screens running, on ports 4567 and 4568. Both are polling build servers and showing different jobs. For instance, the server on 4567 excludes the www_redirects build (<code>:ignore_jobs =&gt; ["www_redirects"]</code>) whereas the server on 4568 only includes this build (<code>:jobs =&gt; ["www_redirects"]</code>) when polling the build03 server.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Vagrant and VBoxManage import]]></title>
-    <link href="http://www.nathenharvey.com/blog/2010/12/27/vagrant-and-vboxmanage-import/"/>
-    <updated>2010-12-27T19:25:00-05:00</updated>
-    <id>http://www.nathenharvey.com/blog/2010/12/27/vagrant-and-vboxmanage-import</id>
-    <content type="html"><![CDATA[<p>I've recently started using <a href="http://vagrantup.com/">Vagrant</a> for building local VMs with VirtualBox. It's a great way to test out my <a href="http://www.opscode.com/chef">Chef</a> cookbooks.</p>
-
-<p>I recently ran into an error after a system crash. When I tried to run:</p>
-
-<p><code>bash
-vagrant up
-</code></p>
-
-<p>the following error was reported:</p>
-
-<p><code>bash
-The VM import failed! Try running `VBoxManage import` on the box file manually
-for more verbose error output.
-</code></p>
-
-<p>To successfully run VBoxManage import, you first need to locate the .ovf file used by Vagrant when building your VM. Typically, you'll find your box definitions in the <code>~/.vagrant/boxes</code> directory. So, I tried to run the command specified from there:</p>
-
-<p>``` bash
-cd ~/.vagrant/boxes/base</p>
-
-<p>VBoxManage import box.ovf</p>
-
-<p>ERROR: Cannot register the hard disk
-'~/.vagrant/boxes/base/vagrant-centos64-disk.vmdk' with UUID
-{5d2426bf-f04e-40a0-bf36-a27c8d45f920} because a hard disk
-'~/.vagrant/boxes/base/vagrant-centos64-disk.vmdk' with UUID
-{5d2426bf-f04e-40a0-bf36-a27c8d45f920} already exists in the media registry
-('~/Library/VirtualBox/VirtualBox.xml')
-```</p>
-
-<p>To get around this, I simply removed <code>~/Library/VirtualBox/VirtualBox.xml</code>. I was then able to vagrant up and continue on with my Chef cookbook.</p>
 ]]></content>
   </entry>
   

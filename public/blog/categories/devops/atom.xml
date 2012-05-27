@@ -4,7 +4,7 @@
   <title><![CDATA[Category: devops | Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/blog/categories/devops/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2012-05-25T15:16:43-04:00</updated>
+  <updated>2012-05-26T23:34:05-04:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -12,6 +12,59 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[5 Things You Always Wanted to Know About Chef]]></title>
+    <link href="http://www.nathenharvey.com/blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/"/>
+    <updated>2012-05-26T21:51:00-04:00</updated>
+    <id>http://www.nathenharvey.com/blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef</id>
+    <content type="html"><![CDATA[<p>When I first started working with Chef, there were a couple of areas that I knew were going to be really awesome and helpful but I wasn't sure how to get started with them.  In this presentation, I'll provide a quick introduction to five things you've always wanted to know about Chef but were afraid to ask.</p>
+
+<p>Level-up your Chef skills by learning about these areas of Chef:</p>
+
+<ul>
+<li><strong>Attribute Precedence</strong> - Role, environment, cookbook, data bag? Which attribute value will be used in my chef run?</li>
+<li><strong>Encrypted Databags</strong> - Chef 0.10 brought us encrypted databags. We'll look at how to create and use databags and how to keep them up-to-date in your repository.</li>
+<li><strong>LWRP</strong> - What is a LWRP? How and why do you create one? We'll look at a couple of sample LWRPs and learn how to build a simple one.</li>
+<li><strong>Error Handlers</strong> - Demystify exception and report handlers by writing a simple one and seeing examples of how they work in the wild.</li>
+<li><strong>Capistrano and Chef</strong> - Take a quick look at why and how to integrate Chef search into your Capistrano configuration to make deploying your Rails apps even easier.</li>
+</ul>
+
+
+<p>One thing I didn't mention in the presentation was how to use the data from the encrypted data bag.  I've updated the slides to include this info but it doesn't appear in the video.  In any case, here's a quick demo of how you might use it:</p>
+
+<p>``` ruby
+creds = Chef::EncryptedDataBagItem.load("db", "creds")
+env_db_creds = db_creds[node["rails_env"]]</p>
+
+<p>template "#{app_dir}/shared/config/database.yml" do
+  source "database.yml.erb"
+  variables(</p>
+
+<pre><code>:rails_env =&gt; node["rails_env"],
+:username =&gt; env_db_creds["username"],
+:password =&gt; env_db_creds["password"]
+</code></pre>
+
+<p>  )
+end
+```</p>
+
+<h3>Video</h3>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/uREL4FFPddo" frameborder="0" allowfullscreen></iframe>
+
+
+<h3>Slides</h3>
+
+<script async class="speakerdeck-embed" data-id="4fb532f2850667001f0008f8" data-ratio="1.2945638432364097" src="http://www.nathenharvey.com//speakerdeck.com/assets/embed.js"></script>
+
+
+<hr />
+
+<p><sub>Reposted from the <a href="http://technology.customink.com/blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/">CustomInk Technology blog</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The Joy of Cooking - Whip Up a Rails Environment with Chef]]></title>
@@ -222,53 +275,6 @@ include_recipe "greenscreen"
 ```</p>
 
 <p>With this configuration, we have 2 Green Screens running, on ports 4567 and 4568. Both are polling build servers and showing different jobs. For instance, the server on 4567 excludes the www_redirects build (<code>:ignore_jobs =&gt; ["www_redirects"]</code>) whereas the server on 4568 only includes this build (<code>:jobs =&gt; ["www_redirects"]</code>) when polling the build03 server.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Green Screen]]></title>
-    <link href="http://www.nathenharvey.com/blog/2012/01/02/green-screen/"/>
-    <updated>2012-01-02T14:17:00-05:00</updated>
-    <id>http://www.nathenharvey.com/blog/2012/01/02/green-screen</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/customink/greenscreen">Green Screen</a> is a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area. It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.</p>
-
-<p><img class="right" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/greenscreen.jpg" width="300" height="225" title="Green Screen Monitor" alt="Green Screen Monitor">
-We use Green Screen at <a href="http://www.customink.com">CustomInk</a> to look after our continuous integration servers, currently 3 Hudson servers and one Jenkins cluster. We have a monitor mounted in the engineering office that makes it easy for everyone to quickly assess the build status.</p>
-
-<p>Green Screen is a simple Sinatra application that is <a href="http://nathenharvey.com/blog/2012/01/02/deploying-green-screen">easy to configure and deploy</a>.  It works well with any continuous integration server that conforms to the <a href="http://confluence.public.thoughtworks.org/display/CI/Multiple+Project+Summary+Reporting+Standard">multiple project summary reporting standard</a>.</p>
-
-<p>You can see a sample Green Screen app running at <a href="http://greenscreenapp.com">http://greenscreenapp.com</a>.  Be forewarned, this sample Green Screen looks at all of the builds currently running on <a href="http://ci.jenkins-ci.org">http://ci.jenkins-ci.org</a>.  This is fine for demo purposes but you may find it to be a bit overwhelming since it's <strong>over 300 builds</strong> at the time of this writing.</p>
-
-<!--more-->
-
-
-<h2>History</h2>
-
-<p>Green Screen was originally implemented by <a href="https://github.com/martinjandrews">Marty Andrews</a> and <a href="http://blog.martyandrews.net/2009/08/greenscreen-build-monitor-bvc.html">announced on his blog in 2009</a>. In the original version, a build that was in progress would blink on the screen.
-<a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4565_building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4565_building.jpg" width="208" height="145" title="martinjandrews Green Screen" alt="martinjandrews Green Screen"></a></p>
-
-<p><a href="https://github.com/rsutphin">Rhett Sutphin</a> improved the layout of green screen and introduced a new color, yellow, for builds that are in progress.
-<a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4566-building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4566-building.jpg" width="207" height="145" title="rsutphin Green Screen" alt="rsutphin Green Screen"></a></p>
-
-<p>After using these versions for a while at CustomInk, we decided that the most important thing to know was which builds were failing. Once you get past a handful of builds, it's no longer very interesting to see every build. We forked Rhett's version and created a <a href="https://github.com/customink/greenscreen">new layout for Green Screen</a>.</p>
-
-<p>If everything is passing, the screen is basically one giant checkmark.</p>
-
-<p><a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/green.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/green.jpg" width="210" height="119" title="customink Green Screen" alt="customink Green Screen"></a></p>
-
-<p>If there are any failing builds, they're shown in the main area while all others are displayed on the right.</p>
-
-<p><a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567.jpg" width="210" height="121" title="customink failed build" alt="customink failed build"></a></p>
-
-<p>Finally, a build that previously failed will be shown in yellow while it's rebuilding.</p>
-
-<p><a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567_building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567_building.jpg" width="210" height="121" title="customink building" alt="customink building">
-</a>
-We've also added support for controlling which builds are displayed from each CI server. So that you can explicitly include or exclude builds or just go with the default behavior of showing all builds on the server.</p>
-
-<h2>Deploying</h2>
-
-<p>I'll cover a couple of deployment options for Green Screen in my <a href="http://nathenharvey.com/blog/2012/01/02/deploying-green-screen">next post</a>.</p>
 ]]></content>
   </entry>
   

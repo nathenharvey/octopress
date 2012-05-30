@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "MVT:  Foodcritic and Travis CI"
-date: 2012-05-30 12:01
+date: 2012-05-29 22:30
 published: true
 comments: true
 categories: 
@@ -20,13 +20,13 @@ categories:
   - fnichol
   - atomic_penguin
 ---
-One of the big themes that emerged during [#ChefConf](http://chefconf.opscode.com/) was that we should be testing our infrastructure code.  Software engineers have been practicing test-driven development, behavior-driven development, continuous integration, and many other testing-related practices for a long time.  It's becoming more important for the infrastructure engineers to learn from and apply these practices to our day-to-day workflow.  When it comes to testing Chef-driven infrastructure automation, there are a number of tools and practices that are starting to emerge.  In this article I'll look a "minimum viable testing" (MVT) approach to this problem using [Foodcritic](http://acrmp.github.com/foodcritic/) and [Travis CI](http://travis-ci.org/).  Follow the steps in this article to get your public cookbooks tested after every `git push`
+One of the big themes that emerged during [#ChefConf](http://chefconf.opscode.com/) was that we should be testing our infrastructure code.  Software engineers have been practicing test-driven development, behavior-driven development, continuous integration, and many other testing-related practices for a long time.  It's becoming more important for the infrastructure engineers to learn from and apply these practices to our day-to-day workflow.  When it comes to testing Chef-driven infrastructure automation, there are a number of tools and practices that are starting to emerge.  In this article I'll look at a "minimum viable testing" (MVT) approach to this problem using [Foodcritic](http://acrmp.github.com/foodcritic/) and [Travis CI](http://travis-ci.org/).  [Follow the steps in this article](#steps) to get your public cookbooks tested after every `git push`.
 
 ### Testing with Chef
 
 The idea of building automated tests for your infrastructure code has been getting a lot of traction lately.  When it comes to [Chef](http://www.opscode.com/chef/), many tools are starting to emerge.  
 
-The first tool in this area to get any significant traction, that I know of, was [cucumber-chef](http://www.cucumber-chef.org/).  I first learned of this tool when I saw a pre-release copy of [Test-Driven Infrastructure with Chef](http://shop.oreilly.com/product/0636920020042.do) at the O'Reilly booth at [Velocity Conf 2011](http://velocityconf.com/velocity2011).  [Stephen Nelson-Smith](http://twitter.com/lordcope), the book's author and framework's lead developer, proposes an outside-in approach to testing where your tests can also act as monitors that look after the health of your infrastructure.  I like the idea of this approach and feel it makes a lot of sense in a greenfield environment.  In my particular situation this doesn't feel like the most appropriate way to start testing our infrastructure.  The blurring of testing and monitoring is appealing.  In fact, we typically practice what we call "monitoring-driven development."  When provisioning a new application server, for example, we wait until our monitors have validated the health of the server before adding the server to our load balancer.
+The first tool in this area to get any significant traction, that I know of, was [cucumber-chef](http://www.cucumber-chef.org/).  I first learned of this tool when I saw a pre-release copy of [Test-Driven Infrastructure with Chef](http://shop.oreilly.com/product/0636920020042.do) at the O'Reilly booth at [Velocity Conf 2011](http://velocityconf.com/velocity2011).  [Stephen Nelson-Smith](http://twitter.com/lordcope), the book's author and framework's lead developer, proposes an outside-in approach to testing where your tests can also act as monitors that look after the health of your infrastructure.  I like the idea of this approach and feel it makes a lot of sense in a greenfield environment.  One benefit of this approach is that it blurs the line between testing and monitoring.  You can easily hook-up your monitoring system to your cucumber tests.  
 
 [ChefSpec](https://github.com/acrmp/chefspec) is another tool for testing your Chef code.  It is a gem that makes it easy to write [RSpec](http://rspec.info/) examples for Chef cookbooks.  This style of testing allows you to execute your tests without needing to converge the node that your tests are running on.  In other words, you can execute your tests without needing to provision a server.  One huge appeal to this style of testing is that the feedback loop is very small.  You'll get feedback about your cookbook changes within seconds or a very few minutes of saving your changes.
 
@@ -59,15 +59,25 @@ Foodcritic has two goals:
 * To encourage discussion within the Chef community on the more subjective stuff - what does a good cookbook look like? Opscode have avoided being overly prescriptive which by and large I think is a good thing. Having a set of rules to base discussion on helps drive out what we as a community think is good style.
 {% endblockquote %}
 
+#### Why start with Foodcritic?
+
+Given the plethora of options available, why should you start with Foodcritic?  Well, you have to start somewhere.  We felt Foodcritic was a good choice because it was easy to get started with, the tests ran quickly, and we are working under the assumption that once we started some automated testing, we'll start layering on more and more pieces as we go.  After some initial experiments, we found that we could get Foodcritic looking after our each cookbook in a matter of minutes and local tests running in seconds.
+
+The pseudo-converge approaches (like ChefSpec) initially feel like we'll need to do a lot of mocking that will take some time to get correct.  The post-converge approaches (like cucumber-chef and minitest) will take longer to run and are a bit more complex.  
+
+One benefit of the post-converge approach is the ability to use your tests as health monitors.  We already have monitoring in place and use it as an indicator that a node is fully provisioned.  We call this "monitor-driven development."  Given that, it was better for us to get started with something that runs without requiring a full converge.  Foodcritic fit the bill quite nicely.
+
 ### Travis CI
 
-Travis CI is 
+Travis CI is:
 
 {% blockquote http://about.travis-ci.org/docs/ %}
 A hosted continuous integration service for the open source community.
 {% endblockquote %}
 
-### Automated Foodcritic tests with Travis CI
+Using Travis CI in conjunction with Foodcritic, we'd have a basic automated test foundation to build on.
+
+### Automated Foodcritic tests with Travis CI <a name="steps"></a>
 
 Using Foodcritic and Travis CI, you can quickly set-up a "minimum viable testing" (MVT) environment.  The idea is that once you have some sort of tests running against your cookbooks, you'll want to add more and doing so will be easy.  Let's look at how to add Foodcritic and Travis CI to your cookbook workflow.
 
@@ -140,6 +150,7 @@ recipes resources templates}
   cp_r Dir.glob("{#{files.join(',')}}"), sandbox
   puts "\n\n"
 end
+
 ```
 
 This Rakefile will copy the contents of our cookbook to a temporary directory and run the foodcritic tests on the temporary directory.  Note the `--epic-fail` tag is used to fail the build (return a non-zero exit code) on `any` rule that does not pass.
@@ -150,8 +161,10 @@ That's it!  When you push your commit to github, you should see Travis CI pick-u
 
 One final step that you may consider is adding a build status indicator to your README.  This simple line in your README will let others know what the current build status is for your cookbook.
 
-```
-[![Build Status](https://secure.travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME].png)](http://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME])
+``` sh
+
+f[![Build Status](https://secure.travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME].png)](http://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME])
+
 ```
 
 ### Thanks & Additional Resources

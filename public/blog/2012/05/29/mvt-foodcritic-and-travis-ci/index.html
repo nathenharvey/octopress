@@ -104,7 +104,7 @@
   </header>
 
 
-<div class="entry-content"><p>One of the big themes that emerged during <a href="http://chefconf.opscode.com/">#ChefConf</a> was that we should be testing our infrastructure code.  Software engineers have been practicing test-driven development, behavior-driven development, continuous integration, and many other testing-related practices for a long time.  It&#8217;s becoming more important for the infrastructure engineers to learn from and apply these practices to our day-to-day workflow.  When it comes to testing Chef-driven infrastructure automation, there are a number of tools and practices that are starting to emerge.  In this article I&#8217;ll look at a &#8220;minimum viable testing&#8221; (MVT) approach to this problem using <a href="http://acrmp.github.com/foodcritic/">Foodcritic</a> and <a href="http://travis-ci.org/">Travis CI</a>.  <a href="#steps">Follow the steps in this article</a> to get your public cookbooks tested after every <code>git push</code>.</p>
+<div class="entry-content"><p>One of the big themes that emerged during <a href="http://chefconf.opscode.com/">#ChefConf</a> was that we should be testing our infrastructure code.  Software engineers have been practicing test-driven development, behavior-driven development, continuous integration, and many other testing-related practices for a long time.  It&#8217;s becoming more important for the infrastructure engineers to learn from and apply these practices to our day-to-day workflow.  When it comes to testing Chef-driven infrastructure automation, there are a number of tools and practices that are starting to emerge.  In this article I&#8217;ll look at a &#8220;minimum viable testing&#8221; (MVT) approach to this problem using <a href="http://acrmp.github.com/foodcritic/">Foodcritic</a> and <a href="http://travis-ci.org/">Travis CI</a>.  <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/#steps">Follow the steps in this article</a> to get your public cookbooks tested after every <code>git push</code>.</p>
 
 <h3>Testing with Chef</h3>
 
@@ -127,6 +127,9 @@
 <li><p><a href="http://www.youtube.com/watch?v=o2e0aZUAVGw">Test-driven Development for Chef Practitioners</a> (video)</p></li>
 <li><p><a href="http://www.youtube.com/watch?v=dPaYfAIvqxw">Test Driven Development Roundtable</a> (video)</p></li>
 </ul>
+
+
+<!--more-->
 
 
 <h3>Foodcritic</h3>
@@ -279,7 +282,7 @@
 <p>One final step that you may consider is adding a build status indicator to your README.  This simple line in your README will let others know what the current build status is for your cookbook.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>f<span class="o">[</span>!<span class="o">[</span>Build Status<span class="o">](</span>https://secure.travis-ci.org/<span class="o">[</span>YOUR_GITHUB_USERNAME<span class="o">]</span>/<span class="o">[</span>YOUR_PROJECT_NAME<span class="o">]</span>.png<span class="o">)](</span>http://travis-ci.org/<span class="o">[</span>YOUR_GITHUB_USERNAME<span class="o">]</span>/<span class="o">[</span>YOUR_PROJECT_NAME<span class="o">])</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="o">[</span>!<span class="o">[</span>Build Status<span class="o">](</span>https://secure.travis-ci.org/<span class="o">[</span>YOUR_GITHUB_USERNAME<span class="o">]</span>/<span class="o">[</span>YOUR_PROJECT_NAME<span class="o">]</span>.png<span class="o">)](</span>http://travis-ci.org/<span class="o">[</span>YOUR_GITHUB_USERNAME<span class="o">]</span>/<span class="o">[</span>YOUR_PROJECT_NAME<span class="o">])</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

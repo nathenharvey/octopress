@@ -4,7 +4,7 @@
   <title><![CDATA[Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2012-05-29T22:28:32-04:00</updated>
+  <updated>2012-06-07T08:49:41-04:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -102,7 +102,7 @@
 </span><span class='line'><span class="n">rvm</span><span class="p">:</span>
 </span><span class='line'>  <span class="o">-</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">2</span>
 </span><span class='line'>  <span class="o">-</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span>
-</span><span class='line'><span class="n">script</span><span class="p">:</span> <span class="no">BUNDLE_GEMFILE</span><span class="o">=</span><span class="nb">test</span><span class="o">/</span><span class="n">support</span><span class="o">/</span><span class="no">Gemfile</span> <span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="n">foodcritic</span>
+</span><span class='line'><span class="n">script</span><span class="p">:</span> <span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="n">foodcritic</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

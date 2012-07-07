@@ -4,7 +4,7 @@
   <title><![CDATA[Category: travisci | Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/blog/categories/travisci/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2012-07-06T22:37:13-04:00</updated>
+  <updated>2012-07-06T23:42:01-04:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -133,6 +133,13 @@ gem 'chef', '~> 10.12.0'
 ```</p>
 
 <p>That's it.  On your next <code>git push</code> Travis CI should run <code>knife cookbook test</code> on your cookbook.</p>
+
+<h2>Running locally</h2>
+
+<p>To run the rake tasks locally, you'll need to tell bundler where the Gemfile is, or you'll need to move it to the root directory of your cookbook and update .travis.yml appropriately.  Use the following command to run your tests locally:</p>
+
+<p><code>BUNDLE_GEMFILE=test/support/Gemfile rake knife</code>
+<code>BUNDLE_GEMFILE=test/support/Gemfile rake foodcritic</code></p>
 
 <h2>Full source code</h2>
 
@@ -383,6 +390,10 @@ end</p>
 <li><a href="http://about.travis-ci.org/docs/user/status-images/">Travis CI: Status Images</a></li>
 </ul>
 
+
+<h3>Next Post</h3>
+
+<p>Be sure to read the next post on this topic:  <a href="http://nathenharvey.com/blog/2012/07/06/mvt-knife-test-and-travisci/">MVT: knife test and Travis CI</a></p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2012-06-07T08:49:41-04:00</updated>
+  <updated>2012-07-06T22:37:13-04:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -12,6 +12,310 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MVT: knife test and Travis CI]]></title>
+    <link href="http://www.nathenharvey.com/blog/2012/07/06/mvt-knife-test-and-travisci/"/>
+    <updated>2012-07-06T21:26:00-04:00</updated>
+    <id>http://www.nathenharvey.com/blog/2012/07/06/mvt-knife-test-and-travisci</id>
+    <content type="html"><![CDATA[<p>In my last post, <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">MVT: Foodcritic and Travis CI</a> I described the process for having Travis CI look after your cookbooks and run Foodcritic, the cookbook lint tool, on your cookbook after each <code>git push</code>.  In this post, we&#8217;ll iterate on the &#8220;Minimum Viable Test&#8221; idea by adding in support for knife&#8217;s cookbook testing.</p>
+
+<p>Wait, I&#8217;m already running foodcritic, do I really need to run <code>knife cookbook test</code>, too?</p>
+
+<p>I&#8217;ll use a very simple example to demonstrate that you do.</p>
+
+<p>Let&#8217;s create a very basic cookbook:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>knife cookbook create very_basic
+</span><span class='line'>** Creating cookbook very_basic
+</span><span class='line'>** Creating README <span class="k">for </span>cookbook: very_basic
+</span><span class='line'>** Creating metadata <span class="k">for </span>cookbook: very_basic
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next, we&#8217;ll write a flawed recipe:</p>
+
+<figure class='code'><figcaption><span>cookbooks/very_basic/recipes/default.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">package</span> <span class="s2">&quot;flawed&quot;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">action</span> <span class="ss">:nothing</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, run foodcritic on this cookbook:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>foodcritic cookbooks/very_basic
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Foodcritic doesn&#8217;t throw any errors or find any problem with the cookbook.</p>
+
+<p>Let&#8217;s try testing it with knife:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>knife cookbook <span class="nb">test </span>very_basic
+</span><span class='line'>checking very_basic
+</span><span class='line'>Running syntax check on very_basic
+</span><span class='line'>Validating ruby files
+</span><span class='line'>FATAL: Cookbook file recipes/default.rb has a ruby syntax error:
+</span><span class='line'>FATAL: /Users/nharvey/projects/chef-hosted/.chef/../cookbooks/very_basic/recipes/default.rb:22: syntax error, unexpected keyword_end, expecting <span class="nv">$end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>OK, it should now be obvious that <code>knife cookbook test</code> should be included as part of our MVT.</p>
+
+<!-- more -->
+
+
+<p>To get Travis CI running <code>knife cookbook test</code> for us, we&#8217;ll need to add or update the following files:</p>
+
+<ul>
+<li>.chef/knife.rb</li>
+<li>.travis.yml</li>
+<li>Rakefile</li>
+<li>test/support/Gemfile</li>
+</ul>
+
+
+<p>Of course, this assumes you&#8217;ve configured your cookbook as described in the <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">previous post</a>.  Let&#8217;s start with the Rakefile.</p>
+
+<figure class='code'><figcaption><span>Rakefile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env rake</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">desc</span> <span class="s2">&quot;Runs knife cookbook test&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:knife</span> <span class="k">do</span>
+</span><span class='line'>  <span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="o">[</span><span class="ss">:prepare_sandbox</span><span class="o">].</span><span class="n">execute</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">sh</span> <span class="s2">&quot;bundle exec knife cookbook test cookbook -o </span><span class="si">#{</span><span class="n">sandbox_path</span><span class="si">}</span><span class="s2">/../&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">task</span> <span class="ss">:prepare_sandbox</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">files</span> <span class="o">=</span> <span class="sx">%w{*.md *.rb attributes definitions files providers recipes resources templates}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">rm_rf</span> <span class="n">sandbox_path</span>
+</span><span class='line'>  <span class="n">mkdir_p</span> <span class="n">sandbox_path</span>
+</span><span class='line'>  <span class="n">cp_r</span> <span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;{</span><span class="si">#{</span><span class="n">files</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">}&quot;</span><span class="p">),</span> <span class="n">sandbox_path</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="kp">private</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">sandbox_path</span>
+</span><span class='line'>  <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">),</span> <span class="sx">%w(tmp cookbooks cookbook)</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the file snippet above, I&#8217;ve only included the parts that are relevant for getting knife working.  I&#8217;ll include the full source of the Rakefile at the end of the article.</p>
+
+<p>Next, let&#8217;s add this rake task to our .travis.yml file.</p>
+
+<figure class='code'><figcaption><span>.travis.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">language</span><span class="p">:</span> <span class="n">ruby</span>
+</span><span class='line'><span class="n">gemfile</span><span class="p">:</span>
+</span><span class='line'>   <span class="o">-</span> <span class="nb">test</span><span class="o">/</span><span class="n">support</span><span class="o">/</span><span class="no">Gemfile</span>
+</span><span class='line'><span class="n">rvm</span><span class="p">:</span>
+</span><span class='line'>  <span class="o">-</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">2</span>
+</span><span class='line'>  <span class="o">-</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span>
+</span><span class='line'><span class="n">script</span><span class="p">:</span>
+</span><span class='line'>  <span class="o">-</span> <span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="n">knife</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To successfully run the knife command, Travis CI will need a very minimal Chef configuration.</p>
+
+<figure class='code'><figcaption><span>.chef/knife.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">cache_type</span> <span class="s1">&#39;BasicFile&#39;</span>
+</span><span class='line'><span class="n">cache_options</span><span class="p">(</span><span class="ss">:path</span> <span class="o">=&gt;</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;HOME&#39;</span><span class="o">]</span><span class="si">}</span><span class="s2">/.chef/checksums&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And, of course, we&#8217;ll need to add Chef to our Gemfile.  Be sure to specify a modern version as Travis CI will use 0.8.10 by default (at the time of this writing).</p>
+
+<figure class='code'><figcaption><span>test/support/Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">source</span> <span class="s2">&quot;https://rubygems.org&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;rake&#39;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;chef&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 10.12.0&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s it.  On your next <code>git push</code> Travis CI should run <code>knife cookbook test</code> on your cookbook.</p>
+
+<h2>Full source code</h2>
+
+<p>You can checkout this <a href="https://github.com/customink-webops/percona-install/compare/03b9446e3f1e...e3f04d14b696">Github compare view</a> to see the changes made to the code from the <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">previous post</a>.</p>
+
+<figure class='code'><figcaption><span>.chef/knife.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">cache_type</span> <span class="s1">&#39;BasicFile&#39;</span>
+</span><span class='line'><span class="n">cache_options</span><span class="p">(</span><span class="ss">:path</span> <span class="o">=&gt;</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;HOME&#39;</span><span class="o">]</span><span class="si">}</span><span class="s2">/.chef/checksums&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>.travis.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">language</span><span class="p">:</span> <span class="n">ruby</span>
+</span><span class='line'><span class="n">gemfile</span><span class="p">:</span>
+</span><span class='line'>   <span class="o">-</span> <span class="nb">test</span><span class="o">/</span><span class="n">support</span><span class="o">/</span><span class="no">Gemfile</span>
+</span><span class='line'><span class="n">rvm</span><span class="p">:</span>
+</span><span class='line'>  <span class="o">-</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">2</span>
+</span><span class='line'>  <span class="o">-</span> <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span>
+</span><span class='line'><span class="n">script</span><span class="p">:</span>
+</span><span class='line'>  <span class="o">-</span> <span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="n">knife</span>
+</span><span class='line'>  <span class="o">-</span> <span class="n">bundle</span> <span class="nb">exec</span> <span class="n">rake</span> <span class="n">foodcritic</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The Rakefile was refactored a bit since the previous post:</p>
+
+<figure class='code'><figcaption><span>Rakefile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env rake</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">task</span> <span class="ss">:default</span> <span class="o">=&gt;</span> <span class="s1">&#39;foodcritic&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">desc</span> <span class="s2">&quot;Runs foodcritic linter&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:foodcritic</span> <span class="k">do</span>
+</span><span class='line'>  <span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="o">[</span><span class="ss">:prepare_sandbox</span><span class="o">].</span><span class="n">execute</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="no">Gem</span><span class="o">::</span><span class="no">Version</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;1.9.2&quot;</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="no">Gem</span><span class="o">::</span><span class="no">Version</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">RUBY_VERSION</span><span class="o">.</span><span class="n">dup</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">sh</span> <span class="s2">&quot;foodcritic -f any </span><span class="si">#{</span><span class="n">sandbox_path</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;WARN: foodcritic run is skipped as Ruby </span><span class="si">#{</span><span class="no">RUBY_VERSION</span><span class="si">}</span><span class="s2"> is &lt; 1.9.2.&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">desc</span> <span class="s2">&quot;Runs knife cookbook test&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:knife</span> <span class="k">do</span>
+</span><span class='line'>  <span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="o">[</span><span class="ss">:prepare_sandbox</span><span class="o">].</span><span class="n">execute</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">sh</span> <span class="s2">&quot;bundle exec knife cookbook test cookbook -o </span><span class="si">#{</span><span class="n">sandbox_path</span><span class="si">}</span><span class="s2">/../&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">task</span> <span class="ss">:prepare_sandbox</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">files</span> <span class="o">=</span> <span class="sx">%w{*.md *.rb attributes definitions files providers recipes resources templates}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">rm_rf</span> <span class="n">sandbox_path</span>
+</span><span class='line'>  <span class="n">mkdir_p</span> <span class="n">sandbox_path</span>
+</span><span class='line'>  <span class="n">cp_r</span> <span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;{</span><span class="si">#{</span><span class="n">files</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">}&quot;</span><span class="p">),</span> <span class="n">sandbox_path</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="kp">private</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">sandbox_path</span>
+</span><span class='line'>  <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">),</span> <span class="sx">%w(tmp cookbooks cookbook)</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>test/support/Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">source</span> <span class="s2">&quot;https://rubygems.org&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;rake&#39;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;foodcritic&#39;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;chef&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 10.12.0&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Credit</h3>
+
+<p>A big &#8220;Thank You!&#8221; shout-out to <a href="http://twitter.com/sethvargo">Seth Vargo</a> for writing most of the code used in this post!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MVT:  Foodcritic and Travis CI]]></title>
@@ -1224,32 +1528,6 @@ I also agree with some of 10gen&#8217;s concern that search is like a pandora&#8
 <p>So now I can to some TDC (test-driven configuration) whenever I get a request for a new redirect.</p>
 
 <p>What other methods have you used to test your rewrite rules?</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Passenger and PHP]]></title>
-    <link href="http://www.nathenharvey.com/blog/2010/06/11/passenger-and-php/"/>
-    <updated>2010-06-11T09:25:00-04:00</updated>
-    <id>http://www.nathenharvey.com/blog/2010/06/11/passenger-and-php</id>
-    <content type="html"><![CDATA[<p>I recently migrated a site from mongrel to passenger. Today I learned that the wordpress site that was served up by the same webserver wasn&#8217;t working anymore.</p>
-
-<p>Compared the configurations and everything looked OK, no changes were made as part of the migration. PHP module was being loaded, URL was being properly aliased, etc. Watched my logs and saw that Passenger was attempting to serve up the request which is not what I wanted.</p>
-
-<p>A quick update to my Directory&#8217;s definition and the issue was fixed. I had to explicitly disable Passenger using <code>PassengerEnabled off</code> as seen below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='apache'><span class='line'>  <span class="nb">Alias</span> <span class="sx">/blog</span> <span class="sx">/shared/www/blog</span>
-</span><span class='line'>  <span class="nt">&lt;Directory</span> <span class="s">/shared/www/blog</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nb">DirectoryIndex</span> index.php
-</span><span class='line'>    <span class="nb">PassengerEnabled</span> <span class="k">off</span>
-</span><span class='line'>  <span class="nt">&lt;/Directory&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

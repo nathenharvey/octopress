@@ -4,7 +4,7 @@
   <title><![CDATA[Category: customink | Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/blog/categories/customink/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2012-06-07T08:49:41-04:00</updated>
+  <updated>2012-07-06T22:37:13-04:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -12,6 +12,208 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MVT: knife test and Travis CI]]></title>
+    <link href="http://www.nathenharvey.com/blog/2012/07/06/mvt-knife-test-and-travisci/"/>
+    <updated>2012-07-06T21:26:00-04:00</updated>
+    <id>http://www.nathenharvey.com/blog/2012/07/06/mvt-knife-test-and-travisci</id>
+    <content type="html"><![CDATA[<p>In my last post, <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">MVT: Foodcritic and Travis CI</a> I described the process for having Travis CI look after your cookbooks and run Foodcritic, the cookbook lint tool, on your cookbook after each <code>git push</code>.  In this post, we'll iterate on the "Minimum Viable Test" idea by adding in support for knife's cookbook testing.</p>
+
+<p>Wait, I'm already running foodcritic, do I really need to run <code>knife cookbook test</code>, too?</p>
+
+<p>I'll use a very simple example to demonstrate that you do.</p>
+
+<p>Let's create a very basic cookbook:</p>
+
+<p><code>sh
+knife cookbook create very_basic
+** Creating cookbook very_basic
+** Creating README for cookbook: very_basic
+** Creating metadata for cookbook: very_basic
+</code>
+Next, we'll write a flawed recipe:</p>
+
+<p><code>ruby cookbooks/very_basic/recipes/default.rb
+package "flawed" do
+  action :nothing
+end
+end
+</code></p>
+
+<p>Now, run foodcritic on this cookbook:</p>
+
+<p><code>sh
+foodcritic cookbooks/very_basic
+</code></p>
+
+<p>Foodcritic doesn't throw any errors or find any problem with the cookbook.</p>
+
+<p>Let's try testing it with knife:</p>
+
+<p><code>sh
+knife cookbook test very_basic
+checking very_basic
+Running syntax check on very_basic
+Validating ruby files
+FATAL: Cookbook file recipes/default.rb has a ruby syntax error:
+FATAL: /Users/nharvey/projects/chef-hosted/.chef/../cookbooks/very_basic/recipes/default.rb:22: syntax error, unexpected keyword_end, expecting $end
+</code></p>
+
+<p>OK, it should now be obvious that <code>knife cookbook test</code> should be included as part of our MVT.</p>
+
+<!-- more -->
+
+
+<p>To get Travis CI running <code>knife cookbook test</code> for us, we'll need to add or update the following files:</p>
+
+<ul>
+<li>.chef/knife.rb</li>
+<li>.travis.yml</li>
+<li>Rakefile</li>
+<li>test/support/Gemfile</li>
+</ul>
+
+
+<p>Of course, this assumes you've configured your cookbook as described in the <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">previous post</a>.  Let's start with the Rakefile.</p>
+
+<p>``` ruby Rakefile</p>
+
+<h1>!/usr/bin/env rake</h1>
+
+<p>desc "Runs knife cookbook test"
+task :knife do
+  Rake::Task[:prepare_sandbox].execute</p>
+
+<p>  sh "bundle exec knife cookbook test cookbook -o #{sandbox_path}/../"
+end</p>
+
+<p>task :prepare_sandbox do
+  files = %w{<em>.md </em>.rb attributes definitions files providers recipes resources templates}</p>
+
+<p>  rm_rf sandbox_path
+  mkdir_p sandbox_path
+  cp_r Dir.glob("{#{files.join(',')}}"), sandbox_path
+end</p>
+
+<p>private
+def sandbox_path
+  File.join(File.dirname(<strong>FILE</strong>), %w(tmp cookbooks cookbook))
+end
+```</p>
+
+<p>In the file snippet above, I've only included the parts that are relevant for getting knife working.  I'll include the full source of the Rakefile at the end of the article.</p>
+
+<p>Next, let's add this rake task to our .travis.yml file.</p>
+
+<p><code>ruby .travis.yml
+language: ruby
+gemfile:
+   - test/support/Gemfile
+rvm:
+  - 1.9.2
+  - 1.9.3
+script:
+  - bundle exec rake knife
+</code>
+To successfully run the knife command, Travis CI will need a very minimal Chef configuration.</p>
+
+<p><code>ruby .chef/knife.rb
+cache_type 'BasicFile'
+cache_options(:path =&gt; "#{ENV['HOME']}/.chef/checksums")
+</code></p>
+
+<p>And, of course, we'll need to add Chef to our Gemfile.  Be sure to specify a modern version as Travis CI will use 0.8.10 by default (at the time of this writing).</p>
+
+<p>``` ruby test/support/Gemfile
+source "https://rubygems.org"</p>
+
+<p>gem 'rake'
+gem 'chef', '~> 10.12.0'
+```</p>
+
+<p>That's it.  On your next <code>git push</code> Travis CI should run <code>knife cookbook test</code> on your cookbook.</p>
+
+<h2>Full source code</h2>
+
+<p>You can checkout this <a href="https://github.com/customink-webops/percona-install/compare/03b9446e3f1e...e3f04d14b696">Github compare view</a> to see the changes made to the code from the <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">previous post</a>.</p>
+
+<p><code>ruby .chef/knife.rb
+cache_type 'BasicFile'
+cache_options(:path =&gt; "#{ENV['HOME']}/.chef/checksums")
+</code></p>
+
+<p><code>ruby .travis.yml
+language: ruby
+gemfile:
+   - test/support/Gemfile
+rvm:
+  - 1.9.2
+  - 1.9.3
+script:
+  - bundle exec rake knife
+  - bundle exec rake foodcritic
+</code></p>
+
+<p>The Rakefile was refactored a bit since the previous post:</p>
+
+<p>``` ruby Rakefile</p>
+
+<h1>!/usr/bin/env rake</h1>
+
+<p>task :default => 'foodcritic'</p>
+
+<p>desc "Runs foodcritic linter"
+task :foodcritic do
+  Rake::Task[:prepare_sandbox].execute</p>
+
+<p>  if Gem::Version.new("1.9.2") &lt;= Gem::Version.new(RUBY_VERSION.dup)</p>
+
+<pre><code>sh "foodcritic -f any #{sandbox_path}"
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>puts "WARN: foodcritic run is skipped as Ruby #{RUBY_VERSION} is &lt; 1.9.2."
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>desc "Runs knife cookbook test"
+task :knife do
+  Rake::Task[:prepare_sandbox].execute</p>
+
+<p>  sh "bundle exec knife cookbook test cookbook -o #{sandbox_path}/../"
+end</p>
+
+<p>task :prepare_sandbox do
+  files = %w{<em>.md </em>.rb attributes definitions files providers recipes resources templates}</p>
+
+<p>  rm_rf sandbox_path
+  mkdir_p sandbox_path
+  cp_r Dir.glob("{#{files.join(',')}}"), sandbox_path
+end</p>
+
+<p>private
+def sandbox_path
+  File.join(File.dirname(<strong>FILE</strong>), %w(tmp cookbooks cookbook))
+end
+```</p>
+
+<p>``` ruby test/support/Gemfile
+source "https://rubygems.org"</p>
+
+<p>gem 'rake'
+gem 'foodcritic'
+gem 'chef', '~> 10.12.0'
+```</p>
+
+<h3>Credit</h3>
+
+<p>A big "Thank You!" shout-out to <a href="http://twitter.com/sethvargo">Seth Vargo</a> for writing most of the code used in this post!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MVT:  Foodcritic and Travis CI]]></title>
@@ -355,53 +557,6 @@ include_recipe "greenscreen"
 ```</p>
 
 <p>With this configuration, we have 2 Green Screens running, on ports 4567 and 4568. Both are polling build servers and showing different jobs. For instance, the server on 4567 excludes the www_redirects build (<code>:ignore_jobs =&gt; ["www_redirects"]</code>) whereas the server on 4568 only includes this build (<code>:jobs =&gt; ["www_redirects"]</code>) when polling the build03 server.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Green Screen]]></title>
-    <link href="http://www.nathenharvey.com/blog/2012/01/02/green-screen/"/>
-    <updated>2012-01-02T14:17:00-05:00</updated>
-    <id>http://www.nathenharvey.com/blog/2012/01/02/green-screen</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/customink/greenscreen">Green Screen</a> is a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area. It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room.</p>
-
-<p><img class="right" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/greenscreen.jpg" width="300" height="225" title="Green Screen Monitor" alt="Green Screen Monitor">
-We use Green Screen at <a href="http://www.customink.com">CustomInk</a> to look after our continuous integration servers, currently 3 Hudson servers and one Jenkins cluster. We have a monitor mounted in the engineering office that makes it easy for everyone to quickly assess the build status.</p>
-
-<p>Green Screen is a simple Sinatra application that is <a href="http://nathenharvey.com/blog/2012/01/02/deploying-green-screen">easy to configure and deploy</a>.  It works well with any continuous integration server that conforms to the <a href="http://confluence.public.thoughtworks.org/display/CI/Multiple+Project+Summary+Reporting+Standard">multiple project summary reporting standard</a>.</p>
-
-<p>You can see a sample Green Screen app running at <a href="http://greenscreenapp.com">http://greenscreenapp.com</a>.  Be forewarned, this sample Green Screen looks at all of the builds currently running on <a href="http://ci.jenkins-ci.org">http://ci.jenkins-ci.org</a>.  This is fine for demo purposes but you may find it to be a bit overwhelming since it's <strong>over 300 builds</strong> at the time of this writing.</p>
-
-<!--more-->
-
-
-<h2>History</h2>
-
-<p>Green Screen was originally implemented by <a href="https://github.com/martinjandrews">Marty Andrews</a> and <a href="http://blog.martyandrews.net/2009/08/greenscreen-build-monitor-bvc.html">announced on his blog in 2009</a>. In the original version, a build that was in progress would blink on the screen.
-<a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4565_building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4565_building.jpg" width="208" height="145" title="martinjandrews Green Screen" alt="martinjandrews Green Screen"></a></p>
-
-<p><a href="https://github.com/rsutphin">Rhett Sutphin</a> improved the layout of green screen and introduced a new color, yellow, for builds that are in progress.
-<a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4566-building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4566-building.jpg" width="207" height="145" title="rsutphin Green Screen" alt="rsutphin Green Screen"></a></p>
-
-<p>After using these versions for a while at CustomInk, we decided that the most important thing to know was which builds were failing. Once you get past a handful of builds, it's no longer very interesting to see every build. We forked Rhett's version and created a <a href="https://github.com/customink/greenscreen">new layout for Green Screen</a>.</p>
-
-<p>If everything is passing, the screen is basically one giant checkmark.</p>
-
-<p><a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/green.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/green.jpg" width="210" height="119" title="customink Green Screen" alt="customink Green Screen"></a></p>
-
-<p>If there are any failing builds, they're shown in the main area while all others are displayed on the right.</p>
-
-<p><a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567.jpg" width="210" height="121" title="customink failed build" alt="customink failed build"></a></p>
-
-<p>Finally, a build that previously failed will be shown in yellow while it's rebuilding.</p>
-
-<p><a href="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567_building.jpg"><img class="center" src="http://nathenharvey.s3-website-us-east-1.amazonaws.com/blog/images/greenscreen/4567_building.jpg" width="210" height="121" title="customink building" alt="customink building">
-</a>
-We've also added support for controlling which builds are displayed from each CI server. So that you can explicitly include or exclude builds or just go with the default behavior of showing all builds on the server.</p>
-
-<h2>Deploying</h2>
-
-<p>I'll cover a couple of deployment options for Green Screen in my <a href="http://nathenharvey.com/blog/2012/01/02/deploying-green-screen">next post</a>.</p>
 ]]></content>
   </entry>
   

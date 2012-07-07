@@ -178,3 +178,7 @@ More information on Foodcritic and Travis CI can be found here:
 * [Foodcritic](http://acrmp.github.com/foodcritic/)
 * [Travis CI: Getting started guide](http://about.travis-ci.org/docs/user/getting-started/) 
 * [Travis CI: Status Images](http://about.travis-ci.org/docs/user/status-images/)
+
+### Next Post
+
+Be sure to read the next post on this topic:  [MVT: knife test and Travis CI](http://nathenharvey.com/blog/2012/07/06/mvt-knife-test-and-travisci/)

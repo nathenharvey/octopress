@@ -133,7 +133,6 @@ To run the rake tasks locally, you'll need to tell bundler where the Gemfile is,
 `BUNDLE_GEMFILE=test/support/Gemfile rake knife`
 `BUNDLE_GEMFILE=test/support/Gemfile rake foodcritic`
 
-
 ## Full source code
 
 You can checkout this [Github compare view](https://github.com/customink-webops/percona-install/compare/03b9446e3f1e...e3f04d14b696) to see the changes made to the code from the [previous post](http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/).

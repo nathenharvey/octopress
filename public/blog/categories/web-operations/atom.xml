@@ -4,7 +4,7 @@
   <title><![CDATA[Category: web operations | Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/blog/categories/web-operations/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2012-07-06T23:42:01-04:00</updated>
+  <updated>2012-07-07T08:10:09-04:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -89,7 +89,7 @@ task :knife do
 end</p>
 
 <p>task :prepare_sandbox do
-  files = %w{<em>.md </em>.rb attributes definitions files providers recipes resources templates}</p>
+  files = %w{<em>.md </em>.rb attributes definitions files libraries providers recipes resources templates}</p>
 
 <p>  rm_rf sandbox_path
   mkdir_p sandbox_path
@@ -143,7 +143,7 @@ gem 'chef', '~> 10.12.0'
 
 <h2>Full source code</h2>
 
-<p>You can checkout this <a href="https://github.com/customink-webops/percona-install/compare/03b9446e3f1e...e3f04d14b696">Github compare view</a> to see the changes made to the code from the <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">previous post</a>.</p>
+<p>You can checkout this <a href="https://github.com/customink-webops/percona-install/compare/03b9446e3f1e...9f4132d">Github compare view</a> to see the changes made to the code from the <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">previous post</a>.</p>
 
 <p><code>ruby .chef/knife.rb
 cache_type 'BasicFile'
@@ -195,7 +195,7 @@ task :knife do
 end</p>
 
 <p>task :prepare_sandbox do
-  files = %w{<em>.md </em>.rb attributes definitions files providers recipes resources templates}</p>
+  files = %w{<em>.md </em>.rb attributes definitions files libraries providers recipes resources templates}</p>
 
 <p>  rm_rf sandbox_path
   mkdir_p sandbox_path
@@ -353,7 +353,7 @@ end</p>
 <p>private</p>
 
 <p>def prepare_foodcritic_sandbox(sandbox)
-  files = %w{<em>.md </em>.rb attributes definitions files providers
+  files = %w{<em>.md </em>.rb attributes definitions files libraries providers
 recipes resources templates}</p>
 
 <p>  rm_rf sandbox

@@ -214,7 +214,7 @@
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">task</span> <span class="ss">:prepare_sandbox</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">files</span> <span class="o">=</span> <span class="sx">%w{*.md *.rb attributes definitions files providers recipes resources templates}</span>
+</span><span class='line'>  <span class="n">files</span> <span class="o">=</span> <span class="sx">%w{*.md *.rb attributes definitions files libraries providers recipes resources templates}</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="n">rm_rf</span> <span class="n">sandbox_path</span>
 </span><span class='line'>  <span class="n">mkdir_p</span> <span class="n">sandbox_path</span>
@@ -284,7 +284,7 @@
 
 <h2>Full source code</h2>
 
-<p>You can checkout this <a href="https://github.com/customink-webops/percona-install/compare/03b9446e3f1e...e3f04d14b696">Github compare view</a> to see the changes made to the code from the <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">previous post</a>.</p>
+<p>You can checkout this <a href="https://github.com/customink-webops/percona-install/compare/03b9446e3f1e...9f4132d">Github compare view</a> to see the changes made to the code from the <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">previous post</a>.</p>
 
 <figure class='code'><figcaption><span>.chef/knife.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -375,7 +375,7 @@
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">task</span> <span class="ss">:prepare_sandbox</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">files</span> <span class="o">=</span> <span class="sx">%w{*.md *.rb attributes definitions files providers recipes resources templates}</span>
+</span><span class='line'>  <span class="n">files</span> <span class="o">=</span> <span class="sx">%w{*.md *.rb attributes definitions files libraries providers recipes resources templates}</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="n">rm_rf</span> <span class="n">sandbox_path</span>
 </span><span class='line'>  <span class="n">mkdir_p</span> <span class="n">sandbox_path</span>

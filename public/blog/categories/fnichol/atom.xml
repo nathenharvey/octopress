@@ -4,7 +4,7 @@
   <title><![CDATA[Category: fnichol | Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/blog/categories/fnichol/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2012-07-06T23:42:01-04:00</updated>
+  <updated>2012-07-07T08:10:09-04:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -144,7 +144,7 @@ end</p>
 <p>private</p>
 
 <p>def prepare_foodcritic_sandbox(sandbox)
-  files = %w{<em>.md </em>.rb attributes definitions files providers
+  files = %w{<em>.md </em>.rb attributes definitions files libraries providers
 recipes resources templates}</p>
 
 <p>  rm_rf sandbox

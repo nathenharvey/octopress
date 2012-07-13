@@ -174,7 +174,7 @@
 <p>To get Travis CI running <code>knife cookbook test</code> for us, we&#8217;ll need to add or update the following files:</p>
 
 <ul>
-<li>.chef/knife.rb</li>
+<li>test/.chef/knife.rb</li>
 <li>.travis.yml</li>
 <li>Rakefile</li>
 <li>test/support/Gemfile</li>
@@ -210,7 +210,7 @@
 </span><span class='line'><span class="n">task</span> <span class="ss">:knife</span> <span class="k">do</span>
 </span><span class='line'>  <span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="o">[</span><span class="ss">:prepare_sandbox</span><span class="o">].</span><span class="n">execute</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="n">sh</span> <span class="s2">&quot;bundle exec knife cookbook test cookbook -o </span><span class="si">#{</span><span class="n">sandbox_path</span><span class="si">}</span><span class="s2">/../&quot;</span>
+</span><span class='line'>  <span class="n">sh</span> <span class="s2">&quot;bundle exec knife cookbook test cookbook -c test/.chef/knife.rb  -o </span><span class="si">#{</span><span class="n">sandbox_path</span><span class="si">}</span><span class="s2">/../&quot;</span>
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">task</span> <span class="ss">:prepare_sandbox</span> <span class="k">do</span>
@@ -253,7 +253,7 @@
 
 <p>To successfully run the knife command, Travis CI will need a very minimal Chef configuration.</p>
 
-<figure class='code'><figcaption><span>.chef/knife.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>test/.chef/knife.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">cache_type</span> <span class="s1">&#39;BasicFile&#39;</span>
 </span><span class='line'><span class="n">cache_options</span><span class="p">(</span><span class="ss">:path</span> <span class="o">=&gt;</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;HOME&#39;</span><span class="o">]</span><span class="si">}</span><span class="s2">/.chef/checksums&quot;</span><span class="p">)</span>
@@ -284,9 +284,9 @@
 
 <h2>Full source code</h2>
 
-<p>You can checkout this <a href="https://github.com/customink-webops/percona-install/compare/03b9446e3f1e...9f4132d">Github compare view</a> to see the changes made to the code from the <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">previous post</a>.</p>
+<p>You can checkout this <a href="https://github.com/customink-webops/percona-install/compare/03b944...d423b14">Github compare view</a> to see the changes made to the code from the <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">previous post</a>.</p>
 
-<figure class='code'><figcaption><span>.chef/knife.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>test/.chef/knife.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">cache_type</span> <span class="s1">&#39;BasicFile&#39;</span>
 </span><span class='line'><span class="n">cache_options</span><span class="p">(</span><span class="ss">:path</span> <span class="o">=&gt;</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;HOME&#39;</span><span class="o">]</span><span class="si">}</span><span class="s2">/.chef/checksums&quot;</span><span class="p">)</span>
@@ -371,7 +371,7 @@
 </span><span class='line'><span class="n">task</span> <span class="ss">:knife</span> <span class="k">do</span>
 </span><span class='line'>  <span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="o">[</span><span class="ss">:prepare_sandbox</span><span class="o">].</span><span class="n">execute</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="n">sh</span> <span class="s2">&quot;bundle exec knife cookbook test cookbook -o </span><span class="si">#{</span><span class="n">sandbox_path</span><span class="si">}</span><span class="s2">/../&quot;</span>
+</span><span class='line'>  <span class="n">sh</span> <span class="s2">&quot;bundle exec knife cookbook test cookbook -c test/.chef/knife.rb -o </span><span class="si">#{</span><span class="n">sandbox_path</span><span class="si">}</span><span class="s2">/../&quot;</span>
 </span><span class='line'><span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">task</span> <span class="ss">:prepare_sandbox</span> <span class="k">do</span>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: devops | Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/blog/categories/devops/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2012-07-07T08:10:09-04:00</updated>
+  <updated>2012-07-13T15:35:51-04:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -68,7 +68,7 @@ FATAL: /Users/nharvey/projects/chef-hosted/.chef/../cookbooks/very_basic/recipes
 <p>To get Travis CI running <code>knife cookbook test</code> for us, we'll need to add or update the following files:</p>
 
 <ul>
-<li>.chef/knife.rb</li>
+<li>test/.chef/knife.rb</li>
 <li>.travis.yml</li>
 <li>Rakefile</li>
 <li>test/support/Gemfile</li>
@@ -85,7 +85,7 @@ FATAL: /Users/nharvey/projects/chef-hosted/.chef/../cookbooks/very_basic/recipes
 task :knife do
   Rake::Task[:prepare_sandbox].execute</p>
 
-<p>  sh "bundle exec knife cookbook test cookbook -o #{sandbox_path}/../"
+<p>  sh "bundle exec knife cookbook test cookbook -c test/.chef/knife.rb  -o #{sandbox_path}/../"
 end</p>
 
 <p>task :prepare_sandbox do
@@ -118,7 +118,7 @@ script:
 </code>
 To successfully run the knife command, Travis CI will need a very minimal Chef configuration.</p>
 
-<p><code>ruby .chef/knife.rb
+<p><code>ruby test/.chef/knife.rb
 cache_type 'BasicFile'
 cache_options(:path =&gt; "#{ENV['HOME']}/.chef/checksums")
 </code></p>
@@ -143,9 +143,9 @@ gem 'chef', '~> 10.12.0'
 
 <h2>Full source code</h2>
 
-<p>You can checkout this <a href="https://github.com/customink-webops/percona-install/compare/03b9446e3f1e...9f4132d">Github compare view</a> to see the changes made to the code from the <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">previous post</a>.</p>
+<p>You can checkout this <a href="https://github.com/customink-webops/percona-install/compare/03b944...d423b14">Github compare view</a> to see the changes made to the code from the <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">previous post</a>.</p>
 
-<p><code>ruby .chef/knife.rb
+<p><code>ruby test/.chef/knife.rb
 cache_type 'BasicFile'
 cache_options(:path =&gt; "#{ENV['HOME']}/.chef/checksums")
 </code></p>
@@ -191,7 +191,7 @@ end</p>
 task :knife do
   Rake::Task[:prepare_sandbox].execute</p>
 
-<p>  sh "bundle exec knife cookbook test cookbook -o #{sandbox_path}/../"
+<p>  sh "bundle exec knife cookbook test cookbook -c test/.chef/knife.rb -o #{sandbox_path}/../"
 end</p>
 
 <p>task :prepare_sandbox do

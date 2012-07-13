@@ -63,9 +63,9 @@ OK, it should now be obvious that `knife cookbook test` should be included as pa
 
 To get Travis CI running `knife cookbook test` for us, we'll need to add or update the following files:
 
-* test/.chef/knife.rb
 * .travis.yml
 * Rakefile
+* test/.chef/knife.rb
 * test/support/Gemfile
 
 Of course, this assumes you've configured your cookbook as described in the [previous post](http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/).  Let's start with the Rakefile.

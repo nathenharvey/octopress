@@ -4,7 +4,7 @@
   <title><![CDATA[Category: travisci | Nathen Harvey]]></title>
   <link href="http://www.nathenharvey.com/blog/categories/travisci/atom.xml" rel="self"/>
   <link href="http://www.nathenharvey.com/"/>
-  <updated>2012-07-13T15:35:51-04:00</updated>
+  <updated>2012-07-13T15:38:04-04:00</updated>
   <id>http://www.nathenharvey.com/</id>
   <author>
     <name><![CDATA[Nathen Harvey]]></name>
@@ -68,9 +68,9 @@ FATAL: /Users/nharvey/projects/chef-hosted/.chef/../cookbooks/very_basic/recipes
 <p>To get Travis CI running <code>knife cookbook test</code> for us, we'll need to add or update the following files:</p>
 
 <ul>
-<li>test/.chef/knife.rb</li>
 <li>.travis.yml</li>
 <li>Rakefile</li>
+<li>test/.chef/knife.rb</li>
 <li>test/support/Gemfile</li>
 </ul>
 

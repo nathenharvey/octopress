@@ -144,5 +144,4 @@ May 1995
 * [github](https://github.com/nathenharvey/)
 * [LinkedIn](http://www.linkedin.com/in/nathen)
 
-
-
+[View  my full resume](http://visualcv.com/nathenharvey) on VisualCV.com.

@@ -3,6 +3,8 @@ layout: page
 title: Nathen Harvey
 footer: false
 ---
+[View  my full resume](http://visualcv.com/nathenharvey) on VisualCV.com.
+
 # Summary
 
 I am the manager of Web Operations for [CustomInk](http://www.customink.com), a website that allows you to design and purchase custom apparel for your group or special event. I am the co-organizer of the [DevOps DC](http://www.meetup.com/DevOpsDC/) and [Washington DC MongoDB Users' Group](http://www.meetup.com/Washington-DC-MongoDB-Users-Group/). I am a co-host of the [Food Fight Show](http://foodfightshow.org), a podcast dedicated to Chef and DevOps.  I contribute to open source projects including the [Opscode Chef](http://www.opscode.com/chef/) framework.  When not working or hosting meetups, I enjoy going to concerts, drinking craft beer, and over sharing on sites like [twitter](http://twitter.com/nathenharvey), [untappd](http://untappd.com/user/nathenharvey), and [foursquare](https://foursquare.com/nathenharvey).
